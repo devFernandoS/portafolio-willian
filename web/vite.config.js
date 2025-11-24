@@ -20,9 +20,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // La ruta ahora es relativa a la nueva 'root' ('src')
-        main: 'index.html',
+        main: 'src/index.html',
         // Si tuvieras una página de contacto, la añadirías aquí:
-        contacto: 'contacto.html'
+        contacto: 'src/contacto.html'
       }
     }
   }
