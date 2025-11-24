@@ -4,7 +4,7 @@ stitch
 #dependencies
 node_modules
 
-/web/.vite
-/web/dist
-/web/build
+web/.vite
+web/dist
+web/build
 
