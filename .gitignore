@@ -1,6 +1,10 @@
 #references to build artifacts
 ia-mvp
 stitch
-
 #dependencies
 node_modules
+
+/web/.vite
+/web/dist
+/web/build
+
