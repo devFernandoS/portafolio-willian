@@ -1,2 +1,8 @@
 ia-mvp
 stitch
+
+node_modules
+
+/web/.vite
+/web/dist
+/web/build
