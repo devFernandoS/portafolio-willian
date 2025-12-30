@@ -61,5 +61,14 @@ La estrategia actual es empezar de forma simple y escalar según sea necesario.
     -   [ ] Implementar un sistema de caché y optimizaciones avanzadas.
 
 ---
+Este portfolio está diseñado como una aplicación full-stack escalable.
+
+- Frontend estático para máxima performance
+- Backend desacoplado, activado solo cuando es necesario
+- Base de datos preparada para contenido dinámico
+- Infraestructura reproducible con Docker
+
+Decisión clave:
+No activar complejidad hasta que el producto lo requiera.
 
 > Este `README.md` se basa en la estructura y configuraciones del proyecto `ia-mvp`, adaptado para los objetivos de un portafolio profesional.
