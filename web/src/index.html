@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html class="light" lang="es">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
@@ -14,6 +14,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
     rel="stylesheet" />
+  <link href="./css/global.css" rel="stylesheet" />
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -57,14 +58,14 @@
             </div>
             <div class="hidden md:flex flex-1 justify-end gap-8">
               <div class="flex items-center gap-9">
-                <a class="text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
-                  href="#">Inicio</a>
-                <a class="text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                  href="index.html">Inicio</a>
+                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
                   href="#">Proyectos</a>
-                <a class="text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
                   href="contacto.html">Contacto</a>
               </div>
-              <div class="flex gap-2">
+              <div class="flex gap-2 items-center">
                 <button
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
                   <span class="material-symbols-outlined">alternate_email</span>
@@ -73,10 +74,12 @@
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
                   <span class="material-symbols-outlined">code</span>
                 </button>
-                <button
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                  <span class="material-symbols-outlined">palette</span>
-                </button>
+                <div class="theme-switch-wrapper">
+                  <label class="theme-switch" for="theme-toggle">
+                    <input type="checkbox" id="theme-toggle" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
               </div>
             </div>
           </header>
@@ -109,7 +112,7 @@
                     </h2>
                     <h2
                       class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal">
-                      Desarrollador Web 
+                      Desarrollador Web Full-Stack
                     </h2>
                   </div>
                   <div class="flex flex-wrap gap-3">
@@ -144,17 +147,21 @@
                   <!-- BodyText -->
                   <div class="space-y-4">
                     <p class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-relaxed">
-                      Soy Desarrollador Full-Stack con experiencia profesional en Angular, React , Spring Boot, Node.js y tecnologías web modernas, trabajando en proyectos de migración, 
-                      integración de servicios (Mercado Libre, Mercado Pago, Redmine), análisis de datos y generación de reportes.  
+                      Soy Desarrollador Full-Stack con experiencia profesional en Angular, React , Spring Boot, Node.js
+                      y tecnologías web modernas, trabajando en proyectos de migración,
+                      integración de servicios (Mercado Libre, Mercado Pago, Redmine), análisis de datos y generación de
+                      reportes.
                     </p>
                     <p class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-relaxed">
                       Mi enfoque está en construir soluciones estables, escalables y fáciles de mantener,
-                       aplicando buenas prácticas como POO, SOLID y Clean Architecture.
+                      aplicando buenas prácticas como POO, SOLID y Clean Architecture.
                     </p>
                     <p class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-relaxed">
-                    Me motiva resolver problemas complejos, trabajar en equipos ágiles y desarrollar productos que aporten valor real al usuario. 
-                    Tengo un fuerte interés en el backend, los microservicios, el diseño de interfaces centradas en la experiencia del usuario y el desarrollo mobile,
-                     área en la que continúo aprendiendo y creciendo profesionalmente
+                      Me motiva resolver problemas complejos, trabajar en equipos ágiles y desarrollar productos que
+                      aporten valor real al usuario.
+                      Tengo un fuerte interés en el backend, los microservicios, el diseño de interfaces centradas en la
+                      experiencia del usuario y el desarrollo mobile,
+                      área en la que continúo aprendiendo y creciendo profesionalmente
                     </p>
                   </div>
                   <!-- Skills Section -->
@@ -167,7 +174,8 @@
                       <span
                         class="inline-flex items-center rounded-md bg-[#2ECC71]/20 px-3 py-1 text-sm font-medium text-[#2ECC71] ring-1 ring-inset ring-[#2ECC71]/30">Angular</span>
 
-                      <span  class="inline-flex items-center rounded-md bg-[#2ECC71]/20 px-3 py-1 text-sm font-medium text-[#2ECC71] ring-1 ring-inset ring-[#2ECC71]/30">React</span>
+                      <span
+                        class="inline-flex items-center rounded-md bg-[#2ECC71]/20 px-3 py-1 text-sm font-medium text-[#2ECC71] ring-1 ring-inset ring-[#2ECC71]/30">React</span>
                       <span
                         class="inline-flex items-center rounded-md bg-[#2ECC71]/20 px-3 py-1 text-sm font-medium text-[#2ECC71] ring-1 ring-inset ring-[#2ECC71]/30">Node.js</span>
                       <span
@@ -205,7 +213,9 @@
     </div>
   </div>
 
-<script src="./js/files.js" type="module"></script>
+  <script src="./js/navbar.js" type="module"></script>
+  <script src="./js/files.js" type="module"></script>
+  <script src="./js/theme.js" type="module"></script>
 </body>
 
 </html>
