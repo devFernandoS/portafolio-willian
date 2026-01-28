@@ -22,7 +22,11 @@ export default defineConfig({
         // La ruta ahora es relativa a la nueva 'root' ('src')
         main: 'src/index.html',
         // Si tuvieras una página de contacto, la añadirías aquí:
-        contacto: 'src/contacto.html'
+        contacto: 'src/contacto.html',
+        // Añadimos la página 404 para que Vite la procese
+        404: 'src/404.html',
+        // Añadimos la página de "en desarrollo"
+        desarrollo: 'src/desarrollo.html'
       }
     }
   }
