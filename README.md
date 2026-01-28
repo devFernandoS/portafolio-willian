@@ -47,9 +47,9 @@ La pila tecnológica ha sido seleccionada para ofrecer una excelente experiencia
 La estrategia actual es empezar de forma simple y escalar según sea necesario.
 
 1.  **Fase 1: MVP Estático**
-    -   [ ] Integrar los diseños de `stitch` en la aplicación Vite dentro de la carpeta `web`.
+    -   [x] ~~Integrar los diseños de `stitch` en la aplicación Vite dentro de la carpeta `web`.~~
     -   [ ] Personalizar el contenido: textos, imágenes y proyectos.
-    -   [ ] Configurar el pipeline de CI/CD en GitHub Actions para desplegar el sitio estático en Azure Static Web Apps o un servicio similar.
+    -   [x] ~~Configurar el pipeline de CI/CD en GitHub Actions para desplegar el sitio estático en Azure Static Web Apps o un servicio similar~~.
 
 2.  **Fase 2: Funcionalidad Dinámica (Opcional)**
     -   [ ] Activar el backend (`server`) para gestionar un formulario de contacto.
