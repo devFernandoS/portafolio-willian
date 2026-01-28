@@ -1,33 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <title>Página No Encontrada</title>
-    <link rel="stylesheet" href="/css/global.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            flex-direction: column;
+
+    <!-- Incluir Tailwind CSS y la configuración -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link href="/css/global.css" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
         }
-        h1 {
-            font-size: 3rem;
-        }
-        a {
-            margin-top: 20px;
-            text-decoration: underline;
-        }
-    </style>
+    </script>
 </head>
-<body>
-    <div>
-        <h1>404 - Página No Encontrada</h1>
-        <p>Lo sentimos, la página que buscas no existe.</p>
-        <a href="/">Volver al inicio</a>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-[#2c3e50] dark:text-gray-300">
+    <div
+        class="relative flex min-h-screen w-full flex-col items-center justify-center group/design-root overflow-x-hidden">
+        <div class="text-center px-4">
+            <div>
+                <h1 class="text-4xl md:text-6xl font-black text-gray-800 dark:text-gray-200">404</h1>
+                <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Página No Encontrada</p>
+                <p class="mt-2 text-sm text-gray-500">Lo sentimos, la página que buscas no existe o fue movida.</p>
+                <a href="/"
+                    class="mt-6 inline-block rounded-lg bg-primary px-5 py-3 text-sm font-medium text-white hover:bg-opacity-90 transition-colors">
+                    Volver al inicio
+                </a>
+            </div>
+        </div>
     </div>
+    <script src="/js/theme.js" type="module"></script>
 </body>
+
 </html>

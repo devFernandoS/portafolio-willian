@@ -1,33 +1,138 @@
 <!DOCTYPE html>
-<html lang="es">
+<html class="dark" lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>En Desarrollo</title>
-    <link rel="stylesheet" href="/css/global.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            flex-direction: column;
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <title>Página en Desarrollo - Portfolio Profesional</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
+    <style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        h1 {
-            font-size: 3rem;
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.98); }
         }
-        a {
-            margin-top: 20px;
-            text-decoration: underline;
+        .animate-pulse-soft {
+            animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
     </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3A86FF", // Azul
+                        "secondary": "#33D17A", // Verde
+                        "accent": "#FFBE0B", // Amarillo Suave
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#101622",
+                        "text-light-primary": "#212529",
+                        "text-light-secondary": "#6c757d",
+                        "text-dark-primary": "#FFFFFF",
+                        "text-dark-secondary": "#92a4c9",
+                        "card-dark": "#1a2233"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+
 </head>
-<body>
-    <div>
-        <h1>Página en Construcción</h1>
-        <p>Estoy trabajando en esta sección. ¡Estará lista muy pronto!</p>
-        <a href="/">Volver al inicio</a>
+
+<body class="font-display bg-background-light dark:bg-background-dark antialiased overflow-hidden">
+    <div class="relative flex min-h-screen w-full flex-col items-center justify-center px-4 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]"></div>
+        <div class="layout-content-container flex flex-col max-w-[640px] items-center text-center gap-8 z-10">
+            <div class="relative mb-4">
+                <div
+                    class="w-48 h-48 md:w-64 md:h-64 flex items-center justify-center rounded-3xl bg-white/50 dark:bg-card-dark/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 shadow-2xl">
+                    <div class="relative flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[100px] md:text-[140px] text-primary/80">
+                            terminal
+                        </span>
+                        <div class="absolute -top-4 -right-4 bg-accent p-4 rounded-2xl shadow-lg transform rotate-12">
+                            <span class="material-symbols-outlined text-background-dark text-3xl font-bold">
+                                engineering
+                            </span>
+                        </div>
+                        <div
+                            class="absolute -bottom-2 -left-2 bg-secondary p-3 rounded-full shadow-lg animate-pulse-soft">
+                            <span class="material-symbols-outlined text-white text-2xl">
+                                auto_awesome
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent blur-sm transform translate-y-32">
+                </div>
+            </div>
+            <div class="flex flex-col gap-4 px-4">
+                <div
+                    class="inline-flex items-center self-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-bold uppercase tracking-widest mb-2">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                    </span>
+                    En Desarrollo
+                </div>
+                <h1
+                    class="text-text-light-primary dark:text-text-dark-primary text-4xl md:text-5xl font-black leading-tight tracking-tighter">
+                    Próximamente algo <span class="text-primary">increíble</span>
+                </h1>
+                <p
+                    class="text-text-light-secondary dark:text-text-dark-secondary text-lg font-normal leading-relaxed max-w-md mx-auto">
+                    Estoy trabajando en los últimos detalles de esta sección para ofrecerte la mejor experiencia
+                    posible. Estará lista muy pronto.
+                </p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 mt-4">
+                <a class="flex min-w-[200px] cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-full h-14 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-all duration-300 shadow-xl shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-1"
+                    href="/">
+                    <span class="material-symbols-outlined">home</span>
+                    <span>Volver al Inicio</span>
+                </a>
+                <div class="flex items-center gap-3 px-2">
+                    <span class="text-text-light-secondary dark:text-text-dark-secondary text-sm font-medium">O sígueme
+                        en:</span>
+                    <div class="flex gap-2">
+                        <a class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-800 text-text-light-secondary dark:text-text-dark-secondary hover:text-primary transition-colors"
+                            href="https://www.linkedin.com/in/willian-fernando-sullca/" target="_blank">
+                            <span class="material-symbols-outlined text-xl">groups</span>
+                        </a>
+                        <a class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-800 text-text-light-secondary dark:text-text-dark-secondary hover:text-secondary transition-colors"
+                            href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank">
+                            <span class="material-symbols-outlined text-xl">code</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </body>
+
 </html>
