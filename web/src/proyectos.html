@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mis Proyectos Seleccionados - Portfolio Profesional</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="./css/global.css" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #3A86FF;
+            --secondary: #33D17A;
+            --accent: #FFBE0B;
+            --background-light: #F8F9FA;
+            --background-dark: #101622;
+            --text-light-primary: #212529;
+            --text-light-secondary: #6c757d;
+            --text-dark-primary: #FFFFFF;
+            --text-dark-secondary: #92a4c9;
+            --card-dark: #1a2233;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3A86FF",
+                        "secondary": "#33D17A",
+                        "accent": "#FFBE0B",
+                        "background-light": "#F8F9FA",
+                        "background-dark": "#101622",
+                        "text-light-primary": "#212529",
+                        "text-light-secondary": "#6c757d",
+                        "text-dark-primary": "#FFFFFF",
+                        "text-dark-secondary": "#92a4c9",
+                        "card-dark": "#1a2233"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-[#2c3e50] dark:text-gray-300">
+    <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-4 sm:px-10 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+
+                    <!-- TopNavBar -->
+                    <header
+                        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 px-4 sm:px-10 py-3">
+                        <div class="flex items-center gap-4 text-[#2c3e50] dark:text-gray-100">
+                            <div class="size-4 text-[#2ECC71]">
+                                <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Willian Fernando Sullca</h2>
+                        </div>
+                        <div class="hidden md:flex flex-1 justify-end gap-8">
+                            <div class="flex items-center gap-9">
+                                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                                    href="index.html">Inicio</a>
+                                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                                    href="proyectos.html">Proyectos</a>
+                                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                                    href="contacto.html">Contacto</a>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <a href="mailto:sullcafernando18@gmail.com"
+                                    class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                                    <span class="material-symbols-outlined">alternate_email</span>
+                                </a>
+                                <a href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                                    <span class="material-symbols-outlined">code</span>
+                                </a>
+                                <div class="theme-switch-wrapper">
+                                    <label class="theme-switch" for="theme-toggle">
+                                        <input type="checkbox" id="theme-toggle" />
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8 md:gap-12 py-16">
+                        <div class="flex flex-col gap-3 px-4">
+                            <h1
+                                class="text-text-light-primary dark:text-text-dark-primary text-4xl md:text-5xl font-black leading-tight tracking-tighter relative inline-block w-fit">
+                                Mis Proyectos Seleccionados
+                                <span class="absolute -bottom-2 left-0 h-1.5 w-24 bg-accent"></span>
+                            </h1>
+                            <p
+                                class="text-text-light-secondary dark:text-text-dark-secondary text-lg font-normal leading-relaxed pt-4 max-w-2xl">
+                                Una selección de mis trabajos más recientes en diseño de interfaces y desarrollo
+                                full-stack,
+                                enfocados en la experiencia de usuario y el rendimiento.
+                            </p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-4">
+                            <div
+                                class="group bg-white dark:bg-card-dark rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800 flex flex-col">
+                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                    <img alt="Preview Proyecto"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        src="./img/2abc74e3-5311-408e-94f6-900a0ae5f394.PNG" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    </div>
+                                </div>
+                                <div class="p-6 flex flex-col flex-1">
+                                    <h3
+                                        class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold mb-2">
+                                        ICARDS – Plataforma educativa con IA</h3>
+                                    <p
+                                        class="text-text-light-secondary dark:text-text-dark-secondary text-sm mb-4 line-clamp-2">
+                                        Plataforma educativa desarrollada como trabajo universitario, orientada
+                                        a la
+                                        generación automática de flashcards mediante inteligencia artificial.
+                                        Integra
+                                        procesamiento de lenguaje natural para analizar PDFs y crear contenido
+                                        educativo
+                                        de
+                                        forma automática, aplicando principios de Clean Architecture para
+                                        asegurar
+                                        escalabilidad y mantenimiento.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <!-- Frontend -->
+                                        <span
+                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">React</span>
+                                        <span
+                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Material
+                                            UI</span>
+                                        <!-- Backend -->
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
+                                            Node.js
+                                        </span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
+                                            Prisma ORM
+                                        </span>
+                                        <!-- IA / Data -->
+                                        <span
+                                            class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold rounded-full uppercase">
+                                            IA aplicada
+                                        </span>
+                                        <span
+                                            class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold rounded-full uppercase">
+                                            NLP / OpenAI API
+                                        </span>
+                                        <!-- Concepto -->
+                                        <span
+                                            class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold rounded-full uppercase">
+                                            Proyecto académico
+                                        </span>
+                                    </div>
+                                    <div class="mt-auto flex gap-3">
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                            href="https://icards.fun/" target="_blank" rel="noopener noreferrer">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                            Ver Demo
+                                        </a>
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-gray-800 text-text-light-primary dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                            href="#">
+                                            <span class="material-symbols-outlined text-[20px]">code</span>
+                                            Repo GitHub
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="group bg-white dark:bg-card-dark rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800 flex flex-col">
+                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                    <img alt="Preview Proyecto"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        src="img/panel-precios.png" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    </div>
+                                </div>
+                                <div class="p-6 flex flex-col flex-1">
+                                    <h3
+                                        class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold mb-2">
+                                        Mercado Junior – Simulador de Inversiones</h3>
+                                    <p
+                                        class="text-text-light-secondary dark:text-text-dark-secondary text-sm mb-4 line-clamp-2">
+                                        Simulador de inversiones desarrollado como proyecto final de carrera,
+                                        enfocado
+                                        en la
+                                        educación financiera. Incluye perfiles de riesgo, visualización de datos
+                                        históricos
+                                        del mercado y paneles interactivos para la simulación de operaciones
+                                        bursátiles..
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <span
+                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Angular</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Spring
+                                            Boot</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold uppercase">
+                                            MYSql
+                                        </span>
+                                        <!-- Data / Análisis -->
+                                        <span class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold uppercase">
+                                            Análisis financiero
+                                        </span>
+
+                                        <!-- Concepto -->
+                                        <span class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold uppercase">
+                                            Trabajo final de carrera
+                                        </span>
+
+                                    </div>
+                                    <div class="mt-auto flex gap-3">
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                            href="https://mercadojunior.com.ar" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                            Ver Demo
+                                        </a>
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-gray-800 text-text-light-primary dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                            href="https://github.com/FernandoSullca/TPI-Front.git" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <span class="material-symbols-outlined text-[20px]">code</span>
+                                            Repo GitHub
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="group bg-white dark:bg-card-dark rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800 flex flex-col">
+                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                    <img alt="Preview Proyecto"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        src="img/hd-ambientalistas-autocomvocados.png" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    </div>
+                                </div>
+                                <div class="p-6 flex flex-col flex-1">
+                                    <h3
+                                        class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold mb-2">
+                                        Plataforma Web Institucional – Organización Ambientalista</h3>
+                                    <p
+                                        class="text-text-light-secondary dark:text-text-dark-secondary text-sm mb-4 line-clamp-2">
+                                        Desarrollo y migración de una plataforma web institucional como trabajo
+                                        voluntario,
+                                        reemplazando un CMS tradicional por una arquitectura moderna basada en
+                                        Node.js y
+                                        React. Incluye portal de noticias, panel administrativo y mantenimiento
+                                        evolutivo
+                                        post-lanzamiento.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <span
+                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">React</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Node.js</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">MySql</span>
+                                        <!-- Concepto -->
+                                        <span class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold uppercase">
+                                            Migración tecnológica
+                                        </span>
+                                        <span class="px-3 py-1 bg-accent/10 text-accent text-xs font-bold uppercase">
+                                            Voluntariado
+                                        </span>
+                                    </div>
+                                    <div class="mt-auto flex gap-3">
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                            href="https://ambientalistas.org.ar/" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                            Ver Demo
+                                        </a>
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-gray-800 text-text-light-primary dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                            href="#">
+                                            <span class="material-symbols-outlined text-[20px]">code</span>
+                                            Repo GitHub
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="group bg-white dark:bg-card-dark rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800 flex flex-col">
+                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                    <img alt="Preview Proyecto"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        src="img/hd-hogar-aleluya.png" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    </div>
+                                </div>
+                                <div class="p-6 flex flex-col flex-1">
+                                    <h3
+                                        class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold mb-2">
+                                        Sitio Web Institucional – Hogar Aleluya</h3>
+                                    <p
+                                        class="text-text-light-secondary dark:text-text-dark-secondary text-sm mb-4 line-clamp-2">
+                                        Desarrollo completo del sitio web institucional, desde el diseño de
+                                        prototipos
+                                        en
+                                        Figma hasta el despliegue en Firebase Hosting. Proyecto orientado a
+                                        mejorar
+                                        la
+                                        presencia digital de una organización social.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2 mb-6">
+                                        <span
+                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Diseño
+                                            + desarrollo</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">HTML+
+                                            CSS</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Javascript</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">JQuery</span>
+                                        <span
+                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Firebase</span>
+
+                                        <span
+                                            class="px-3 py-1 bg-accent/10 text-accent-700 dark:text-accent text-xs font-bold rounded-full uppercase tracking-wider">Proyecto
+                                            end-to-end</span>
+                                    </div>
+                                    <div class="mt-auto flex gap-3">
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                            href="https://hogaraleluyasitioweb.web.app/" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                            Ver Demo
+                                        </a>
+                                        <a class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-gray-800 text-text-light-primary dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                            href="#">
+                                            <span class="material-symbols-outlined text-[20px]">code</span>
+                                            Repo GitHub
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 mt-8">
+                            <div
+                                class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div>
+                                    <h3
+                                        class="text-text-light-primary dark:text-text-dark-primary text-xl font-bold mb-2">
+                                        ¿Te gusta lo que ves?</h3>
+                                    <p class="text-text-light-secondary dark:text-text-dark-secondary text-sm">
+                                        Podemos
+                                        trabajar juntos en tu próximo gran proyecto.</p>
+                                </div>
+                                <a class="flex items-center gap-2 bg-secondary text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-secondary/20"
+                                    href="#">
+                                    Hablemos ahora
+                                    <span class="material-symbols-outlined">arrow_forward</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./js/navbar.js" type="module"></script>
+    <script src="./js/theme.js" type="module"></script>
+</body>
+
+</html>
