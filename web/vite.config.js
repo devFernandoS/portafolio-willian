@@ -25,7 +25,8 @@ export default defineConfig({
         contacto: 'src/contacto.html',
         // Añadimos la página 404 para que Vite la procese
         404: 'src/404.html',
-        // Añadimos la página de "en desarrollo"
+        // Añadimos la página de "en desarrollo",
+        proyectos: 'src/proyectos.html',
         desarrollo: 'src/desarrollo.html'
       }
     }
