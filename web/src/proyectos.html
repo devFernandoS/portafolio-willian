@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
     <title>Mis Proyectos Seleccionados - Portfolio Profesional</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
@@ -14,18 +16,6 @@
         rel="stylesheet" />
     <link href="./css/global.css" rel="stylesheet" />
     <style type="text/tailwindcss">
-        :root {
-            --primary: #3A86FF;
-            --secondary: #33D17A;
-            --accent: #FFBE0B;
-            --background-light: #F8F9FA;
-            --background-dark: #101622;
-            --text-light-primary: #212529;
-            --text-light-secondary: #6c757d;
-            --text-dark-primary: #FFFFFF;
-            --text-dark-secondary: #92a4c9;
-            --card-dark: #1a2233;
-        }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -40,7 +30,7 @@
                         "secondary": "#33D17A",
                         "accent": "#FFBE0B",
                         "background-light": "#F8F9FA",
-                        "background-dark": "#101622",
+                        "background-dark": "#111921",
                         "text-light-primary": "#212529",
                         "text-light-secondary": "#6c757d",
                         "text-dark-primary": "#FFFFFF",
@@ -66,7 +56,7 @@
     <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
         <div class="layout-container flex h-full grow flex-col">
             <div class="px-4 sm:px-10 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
-                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
 
                     <!-- TopNavBar -->
                     <header
@@ -107,20 +97,23 @@
                             </div>
                         </div>
                     </header>
+                    <main>
+                        <div class="@container py-8">
+                            <div class="flex flex-col gap-3 px-4">
+                                <h1
+                                    class="text-text-light-primary dark:text-text-dark-primary text-4xl md:text-5xl font-black leading-tight tracking-tighter relative inline-block w-fit">
+                                    Mis Proyectos Seleccionados
+                                    <span class="absolute -bottom-2 left-0 h-1.5 w-24 bg-accent"></span>
+                                </h1>
+                                <p
+                                    class="text-text-light-secondary dark:text-text-dark-secondary text-lg font-normal leading-relaxed pt-4 max-w-2xl">
+                                    Una selección de mis trabajos más recientes en diseño de interfaces y desarrollo
+                                    full-stack,
+                                    enfocados en la experiencia de usuario y el rendimiento.
+                                </p>
+                            </div>
 
-                    <div class="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8 md:gap-12 py-16">
-                        <div class="flex flex-col gap-3 px-4">
-                            <h1
-                                class="text-text-light-primary dark:text-text-dark-primary text-4xl md:text-5xl font-black leading-tight tracking-tighter relative inline-block w-fit">
-                                Mis Proyectos Seleccionados
-                                <span class="absolute -bottom-2 left-0 h-1.5 w-24 bg-accent"></span>
-                            </h1>
-                            <p
-                                class="text-text-light-secondary dark:text-text-dark-secondary text-lg font-normal leading-relaxed pt-4 max-w-2xl">
-                                Una selección de mis trabajos más recientes en diseño de interfaces y desarrollo
-                                full-stack,
-                                enfocados en la experiencia de usuario y el rendimiento.
-                            </p>
+
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-4">
                             <div
@@ -386,7 +379,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </main>
                 </div>
             </div>
         </div>
