@@ -1,3 +1,7 @@
+.nav-link {
+    position: relative;
+}
+
 .nav-link.active {
     color: #3498DB;
     border-bottom: 2px solid #3498DB;
