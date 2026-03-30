@@ -182,7 +182,7 @@ Y estas no están configuradas en el entorno de producción, el servicio de corr
      const emailTo = process.env.EMAIL_TO;
      ```
 
-3. **Desplegar Nuevamente**:
+3. **Despliega Nuevamente**:
    - Una vez configuradas las variables, vuelve a desplegar el proyecto:
      ```bash
      vercel --prod
@@ -305,6 +305,38 @@ Esto ocurre porque las propiedades `experimentalServices` y `builds` son mutuame
      ```
 
 Con estos ajustes, el despliegue debería completarse correctamente.
+
+---
+
+### Nota Adicional: Configuración del Comando `build` en el Backend
+
+### Descripción del Problema
+En algunos casos, el backend puede no funcionar correctamente en producción si el comando `build` en el archivo `package.json` no está configurado para iniciar el servidor. Por ejemplo, si el comando `build` solo contiene un `echo`, el servidor no se iniciará.
+
+### Solución
+1. **Actualizar el Comando `build`**:
+   - Asegúrate de que el comando `build` en el archivo `package.json` del backend incluya la instrucción para iniciar el servidor. Por ejemplo:
+     ```json
+     "scripts": {
+       "start": "node src/index.js",
+       "dev": "nodemon src/index.js",
+       "build": "node src/index.js &echo 'Server ready for production'"
+     }
+     ```
+
+2. **Probar en Modo Desarrollo**:
+   - Antes de desplegar, prueba el backend en modo desarrollo para asegurarte de que funciona correctamente:
+     ```bash
+     npm run dev
+     ```
+
+3. **Desplegar en Producción**:
+   - Una vez configurado el comando `build`, despliega el proyecto en Vercel:
+     ```bash
+     vercel --prod
+     ```
+
+Con este ajuste, el servidor debería iniciarse correctamente en producción y manejar las solicitudes como se espera.
 
 ---
 
