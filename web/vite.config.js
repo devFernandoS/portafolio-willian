@@ -20,14 +20,14 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // La ruta ahora es relativa a la nueva 'root' ('src')
-        main: 'src/index.html',
+        main: 'index.html',
         // Si tuvieras una página de contacto, la añadirías aquí:
-        contacto: 'src/contacto.html',
+        contacto: 'contacto.html',
         // Añadimos la página 404 para que Vite la procese
-        404: 'src/404.html',
+        404: '404.html',
         // Añadimos la página de "en desarrollo",
-        proyectos: 'src/proyectos.html',
-        desarrollo: 'src/desarrollo.html'
+        proyectos: 'proyectos.html',
+        desarrollo: 'desarrollo.html'
       }
     }
   }
