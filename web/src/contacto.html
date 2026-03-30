@@ -281,7 +281,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('form');
-            //const API_BASE_URL = 'http://localhost:3000'; // Cambiar a la URL de producción si es necesario
+            const API_URL = window.location.hostname === 'localhost'
+                ? 'http://localhost:3000/api/contact'
+                : 'api/contact';
 
             // Obtener el botón de envío
             const submitButton = document.querySelector('button[type="submit"]');
@@ -327,7 +329,7 @@
                 };
 
                 try {
-                    const response = await fetch('http://localhost:3000/api/contact', {
+                    const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
