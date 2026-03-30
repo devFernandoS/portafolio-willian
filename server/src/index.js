@@ -19,27 +19,29 @@ const sanitizeHtml = require('sanitize-html');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-    origin: 'http://localhost:5173', // Replace with your frontend URL
+    origin: [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        process.env.FRONTEND_URL || 'https://portafolio-willian-fernando-sullca.vercel.app'
+    ],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
 
-// Rate limiter to prevent spam
+// Rate limiter
 const contactLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 5, // Limit each IP to 5 requests per windowMs
+    windowMs: 60 * 1000,
+    max: 5,
     message: 'Demasiadas solicitudes desde esta IP, por favor intente de nuevo más tarde.'
 });
 
-// Apply rate limiter to the /api/contact route
 app.use('/api/contact', contactLimiter);
 
-// Updated contact route with validation and sanitization
+// Contact route
 app.post('/api/contact', [
     body('name').trim().notEmpty().withMessage('El nombre es obligatorio').escape(),
     body('email').isEmail().withMessage('El correo electrónico no es válido').normalizeEmail(),
@@ -60,7 +62,7 @@ app.post('/api/contact', [
         });
 
         const transporter = nodemailer.createTransport({
-            service: 'gmail', // Update this if using a different email provider
+            service: 'gmail',
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
@@ -82,12 +84,17 @@ app.post('/api/contact', [
     }
 });
 
-// Default route for verification
+// Health check
 app.get('/', (req, res) => {
     res.status(200).send('Server is running');
 });
 
-// Levantar el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// Para desarrollo local
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
