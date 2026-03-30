@@ -8,7 +8,8 @@ export default defineConfig({
   publicDir: '../public',
 
   build: {
-    outDir: resolve(__dirname, 'dist'),
+    outDir: resolve(__dirname, '../public_html'),
+    //outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {
       input: {

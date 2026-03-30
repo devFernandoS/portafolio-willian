@@ -8,5 +8,5 @@ web/.vite
 web/dist
 web/build
 dist
-
+public_html
 .vercel
