@@ -5,7 +5,7 @@
       "routePrefix": "/"
     },
     "api": {
-      "entrypoint": "server",
+      "entrypoint": "server/src/index.js",
       "routePrefix": "/api"
     }
   }
