@@ -18,6 +18,28 @@
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
+        .btn-disabled {
+            background-color: #d3d3d3;
+            /* Light gray */
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .btn-enabled {
+            background-color: #007bff;
+            /* Blue */
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .required {
+            color: red;
+            font-size: 1rem;
+            /* Adjust size as needed */
+            margin-left: 4px;
+            /* Add spacing between label text and asterisk */
+        }
     </style>
     <script id="tailwind-config">
         tailwind.config = {
@@ -118,7 +140,55 @@
                                                         href="mailto:sullcafernando18@gmail.com">sullcafernando18@gmail.com</a>
                                                 </p>
                                             </div>
+                                        </div> <!-- section-contacto -->
+                                        <div
+                                            class="lg:col-span-7 bg-card-dark p-8 rounded-xl border-border-dark shadow-2xl">
+                                            <form action="#" class="space-y-6" method="POST">
+                                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div class="flex flex-col gap-2">
+                                                        <label class="text-sm font-semibold text-text-dark-primary"
+                                                            for="name">Nombre completo <span
+                                                                class="required">*</span></label>
+                                                        <input
+                                                            class="w-full bg-background-dark border-border-dark rounded-lg px-4 py-3 text-text-dark-primary focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                                                            id="name" name="name" placeholder="Juan Pérez" type="text"
+                                                            required="true" />
+                                                    </div>
+                                                    <div class="flex flex-col gap-2">
+                                                        <label class="text-sm font-semibold text-text-dark-primary"
+                                                            for="email">Email <span class="required">*</span></label>
+                                                        <input
+                                                            class="w-full bg-background-dark border-border-dark rounded-lg px-4 py-3 text-text-dark-primary focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                                                            id="email" name="email" placeholder="juan@ejemplo.com"
+                                                            type="email" required />
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col gap-2">
+                                                    <label class="text-sm font-semibold text-text-dark-primary"
+                                                        for="subject">Asunto <span class="required">*</span></label>
+                                                    <input
+                                                        class="w-full bg-background-dark border-border-dark rounded-lg px-4 py-3 text-text-dark-primary focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                                                        id="subject" name="subject"
+                                                        placeholder="¿En qué puedo ayudarte?" type="text" required />
+                                                </div>
+                                                <div class="flex flex-col gap-2">
+                                                    <label class="text-sm font-semibold text-text-dark-primary"
+                                                        for="message">Mensaje <span class="required">*</span></label>
+                                                    <textarea
+                                                        class="w-full bg-background-dark border-border-dark rounded-lg px-4 py-3 text-text-dark-primary focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none resize-none"
+                                                        id="message" name="message"
+                                                        placeholder="Cuéntame más sobre tu proyecto..." rows="5"
+                                                        required></textarea>
+                                                </div>
+                                                <button
+                                                    class="w-full md:w-auto px-8 py-4 bg-primary hover:bg-opacity-90 text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/20"
+                                                    type="submit">
+                                                    Enviar mensaje
+                                                    <span class="material-symbols-outlined text-xl">send</span>
+                                                </button>
+                                            </form>
                                         </div>
+
                                         <!-- ActionsBar Section -->
                                         <div class="flex flex-col gap-4">
                                             <h3
@@ -161,6 +231,7 @@
                                         <div class="px-4">
                                             <hr class="border-gray-200 dark:border-gray-700/50" />
                                         </div>
+
                                         <!-- ButtonGroup Section -->
                                         <div class="flex flex-col gap-4">
                                             <h3
@@ -207,6 +278,86 @@
     <script src="./js/navbar.js" type="module"></script>
     <script src="./js/files.js" type="module"></script>
     <script src="./js/theme.js" type="module"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            //const API_BASE_URL = 'http://localhost:3000'; // Cambiar a la URL de producción si es necesario
+
+            // Obtener el botón de envío
+            const submitButton = document.querySelector('button[type="submit"]');
+
+            // Disable the submit button initially
+            submitButton.disabled = true;
+            submitButton.classList.add('btn-disabled');
+
+            // verificacion de campos para deshabilitar el boton de envio
+            form.addEventListener('input', () => {
+                const name = form.querySelector('input[name="name"]').value.trim();
+                const email = form.querySelector('input[name="email"]').value.trim();
+                const subject = form.querySelector('input[name="subject"]').value.trim();
+                const message = form.querySelector('textarea[name="message"]').value.trim();
+
+                // Enable the submit button only if all fields are filled
+                if (name && email && subject && message) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('btn-disabled');
+                    submitButton.classList.add('btn-enabled');
+                } else {
+                    submitButton.disabled = true;
+                    submitButton.classList.remove('btn-enabled');
+                    submitButton.classList.add('btn-disabled');
+                }
+            });
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Disable the submit button to prevent spam clicks
+                submitButton.disabled = true;
+                submitButton.classList.remove('btn-enabled');
+                submitButton.classList.add('btn-disabled');
+                submitButton.textContent = 'Enviando...';
+
+                const formData = new FormData(form);
+                const data = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message')
+                };
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/contact', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        alert('Mensaje enviado con éxito.');
+                        form.reset();
+                        submitButton.disabled = true; // Disable button after successful submission
+                        submitButton.classList.remove('btn-enabled');
+                        submitButton.classList.add('btn-disabled');
+                    } else {
+                        alert(`Error: ${result.error || 'No se pudo enviar el mensaje.'}`);
+                    }
+                } catch (error) {
+                    console.error('Error al enviar el formulario:', error);
+                    alert('Ocurrió un error al enviar el mensaje. Inténtalo de nuevo más tarde.');
+                } finally {
+                    submitButton.textContent = 'Enviar';
+                    submitButton.classList.remove('btn-disabled');
+                    submitButton.classList.add('btn-enabled');
+                    submitButton.disabled = false; // Re-enable button after response
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
