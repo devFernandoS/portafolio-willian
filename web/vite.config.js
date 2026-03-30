@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
@@ -12,16 +13,17 @@ export default defineConfig({
     // 'outDir' es ahora relativo a la raíz 'web'.
     outDir: 'dist',
     emptyOutDir: true,
-    // Las rutas de entrada ahora son relativas a la raíz 'web'.
+    // Usamos rutas absolutas para eliminar cualquier ambigüedad en el entorno de build.
     rollupOptions: {
       input: {
-        main: 'src/index.html',
-        contacto: 'src/contacto.html',
-        404: 'src/404.html',
-        proyectos: 'src/proyectos.html',
-        desarrollo: 'src/desarrollo.html'
+        main: resolve(__dirname, 'src/index.html'),
+        contacto: resolve(__dirname, 'src/contacto.html'),
+        404: resolve(__dirname, 'src/404.html'),
+        proyectos: resolve(__dirname, 'src/proyectos.html'),
+        desarrollo: resolve(__dirname, 'src/desarrollo.html')
       }
     }
   }
 })
+
 
