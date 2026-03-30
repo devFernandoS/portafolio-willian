@@ -8,16 +8,21 @@ export default defineConfig({
   publicDir: '../public',
 
   build: {
-    outDir: '../dist',
+    outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {
       input: {
+        main: resolve(__dirname, 'src/index.html'),
+        contacto: resolve(__dirname, 'src/contacto.html'),
+        '404': resolve(__dirname, 'src/404.html'),
+        proyectos: resolve(__dirname, 'src/proyectos.html'),
+        desarrollo: resolve(__dirname, 'src/desarrollo.html')
         //  adelante, SIN 'src/', SIN resolve(__dirname, ...)
-        main: 'src/index.html',
-        contacto: 'src/contacto.html',
-        '404': 'src/404.html',
-        proyectos: 'src/proyectos.html',
-        desarrollo: 'src/desarrollo.html'
+        // main: 'src/index.html',
+        // contacto: 'src/contacto.html',
+        // '404': 'src/404.html',
+        // proyectos: 'src/proyectos.html',
+        // desarrollo: 'src/desarrollo.html'
       }
     }
   }
