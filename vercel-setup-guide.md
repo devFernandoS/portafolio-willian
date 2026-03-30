@@ -253,4 +253,59 @@ Con esta configuración completa, Vercel podrá detectar correctamente los servi
 
 ---
 
+### Nota Adicional: Conflicto entre `experimentalServices` y `builds`
+
+### Descripción del Error
+Al intentar desplegar un proyecto en Vercel, puede aparecer el siguiente error:
+
+```
+The `experimentalServices` property cannot be used in conjunction with the `builds` property. Please remove one of them.
+```
+
+Esto ocurre porque las propiedades `experimentalServices` y `builds` son mutuamente excluyentes. Si estás utilizando `experimentalServices` para configurar múltiples servicios (como frontend y backend), no debes incluir la propiedad `builds` en el archivo `vercel.json`.
+
+### Solución
+1. **Eliminar la Propiedad `builds`**:
+   - Si estás utilizando `experimentalServices`, elimina la sección `builds` del archivo `vercel.json`.
+
+   Ejemplo de archivo corregido:
+   ```json
+   {
+     "version": 2,
+     "routes": [
+       {
+         "src": "/api/(.*)",
+         "dest": "server/$1"
+       },
+       {
+         "src": "(.*)",
+         "dest": "web/$1"
+       }
+     ],
+     "experimentalServices": {
+       "web": {
+         "entrypoint": "web",
+         "routePrefix": "/"
+       },
+       "api": {
+         "entrypoint": "server",
+         "routePrefix": "/api"
+       }
+     }
+   }
+   ```
+
+2. **Usar Solo `builds` si No Necesitas `experimentalServices`**:
+   - Si decides no usar `experimentalServices`, puedes mantener la sección `builds` para definir cómo construir cada servicio.
+
+3. **Desplegar Nuevamente**:
+   - Una vez corregido el archivo `vercel.json`, vuelve a desplegar el proyecto:
+     ```bash
+     vercel --prod
+     ```
+
+Con estos ajustes, el despliegue debería completarse correctamente.
+
+---
+
 Con esta configuración, tendrás un despliegue optimizado y funcional para tu portafolio con frontend y backend integrados.
