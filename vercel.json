@@ -1,35 +1,11 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "web/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "web/dist"
-      }
-    },
-    {
-      "src": "server/package.json",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server/$1"
-    },
-    {
-      "src": "(.*)",
-      "dest": "web/$1"
-    }
-  ],
   "experimentalServices": {
     "web": {
       "entrypoint": "web",
       "routePrefix": "/"
     },
     "api": {
-      "entrypoint": "server",
+      "entrypoint": "server/src/index.js",
       "routePrefix": "/api"
     }
   }
