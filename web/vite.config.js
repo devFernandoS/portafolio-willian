@@ -2,33 +2,26 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Le decimos a Vite que la raíz del proyecto es la carpeta 'src'
-  root: 'src',
+  // El directorio raíz ahora es 'web' (donde está este archivo), que es el comportamiento por defecto.
+  // Ya no usamos la opción 'root: 'src''.
 
-  // Esta es la carpeta donde Vite buscará los archivos estáticos
-  // como imágenes, fuentes, etc. durante el desarrollo.
-  publicDir: '../public',
+  // 'publicDir' es ahora relativo a la raíz 'web'.
+  publicDir: 'public',
 
   build: {
-    // Esta es la carpeta donde Vite pondrá los archivos optimizados
-    // después de ejecutar `npm run build`.
-    // Salimos de 'src' para crear la carpeta 'dist' en la raíz de 'web'
-    outDir: '../dist',
+    // 'outDir' es ahora relativo a la raíz 'web'.
+    outDir: 'dist',
     emptyOutDir: true,
-    // Esto le dice a Vite que el punto de entrada de tu aplicación es el index.html
-    // Es perfecto para sitios estáticos multipágina si los tuvieras.
+    // Las rutas de entrada ahora son relativas a la raíz 'web'.
     rollupOptions: {
       input: {
-        // La ruta ahora es relativa a la nueva 'root' ('src')
-        main: 'index.html',
-        // Si tuvieras una página de contacto, la añadirías aquí:
-        contacto: 'contacto.html',
-        // Añadimos la página 404 para que Vite la procese
-        404: '404.html',
-        // Añadimos la página de "en desarrollo",
-        proyectos: 'proyectos.html',
-        desarrollo: 'desarrollo.html'
+        main: 'src/index.html',
+        contacto: 'src/contacto.html',
+        404: 'src/404.html',
+        proyectos: 'src/proyectos.html',
+        desarrollo: 'src/desarrollo.html'
       }
     }
   }
 })
+
