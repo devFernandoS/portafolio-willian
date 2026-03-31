@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         rel="stylesheet" />
     <link href="./css/global.css" rel="stylesheet" />
+    <link href="./css/toast.css" rel="stylesheet" />
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -278,7 +279,10 @@
     <script src="./js/navbar.js" type="module"></script>
     <script src="./js/files.js" type="module"></script>
     <script src="./js/theme.js" type="module"></script>
-    <script>
+
+    <script type="module">
+        import { Toast } from './js/toast.js';
+
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.querySelector('form');
             const API_URL = window.location.hostname === 'localhost'
@@ -340,17 +344,18 @@
                     const result = await response.json();
 
                     if (response.ok) {
-                        alert('Mensaje enviado con éxito.');
+                        Toast.show('Mensaje enviado con éxito.', "success");
                         form.reset();
                         submitButton.disabled = true; // Disable button after successful submission
                         submitButton.classList.remove('btn-enabled');
                         submitButton.classList.add('btn-disabled');
                     } else {
-                        alert(`Error: ${result.error || 'No se pudo enviar el mensaje.'}`);
+                        Toast.show(`Error: ${result.error || 'No se pudo enviar el mensaje.'}`, "error");
                     }
                 } catch (error) {
                     console.error('Error al enviar el formulario:', error);
-                    alert('Ocurrió un error al enviar el mensaje. Inténtalo de nuevo más tarde.');
+                    Toast.show('Ocurrió un error al enviar el mensaje. Inténtalo de nuevo más tarde.', "error");
+
                 } finally {
                     submitButton.textContent = 'Enviar';
                     submitButton.classList.remove('btn-disabled');
