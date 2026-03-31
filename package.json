@@ -1,0 +1,7 @@
+{
+    "name": "portfolio-root",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "cd web && npm install && npx vite build"
+    }
+}

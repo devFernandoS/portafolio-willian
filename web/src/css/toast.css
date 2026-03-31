@@ -1,0 +1,94 @@
+/* Contenedor de las alertas */
+.custom-alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    /* Permite hacer clic a través del contenedor vacío */
+}
+
+/* Estilo base de la alerta */
+.custom-alert {
+    min-width: 250px;
+    max-width: 350px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    pointer-events: auto;
+    /* Restaura los clics para la alerta */
+
+    /* Animación de entrada */
+    opacity: 0;
+    transform: translateX(100%);
+    animation: slideInRight 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Colores según el tipo de alerta */
+.custom-alert-success {
+    background-color: #10b981;
+}
+
+/* Verde */
+.custom-alert-error {
+    background-color: #ef4444;
+}
+
+/* Rojo */
+.custom-alert-warning {
+    background-color: #f59e0b;
+}
+
+/* Naranja */
+.custom-alert-info {
+    background-color: #3b82f6;
+}
+
+/* Azul */
+
+/* Botón de cerrar */
+.custom-alert-close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.custom-alert-close:hover {
+    color: #fff;
+}
+
+/* Animación de salida */
+.custom-alert.fade-out {
+    animation: fadeOutRight 0.3s ease-in forwards;
+}
+
+/* Keyframes para las animaciones */
+@keyframes slideInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOutRight {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}

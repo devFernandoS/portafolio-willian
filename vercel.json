@@ -1,12 +1,26 @@
 {
-  "experimentalServices": {
-    "web": {
-      "entrypoint": "web",
-      "routePrefix": "/"
+  "version": 2,
+  "builds": [
+    {
+      "src": "web/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "../public_html"
+      }
     },
-    "api": {
-      "entrypoint": "server/src/index.js",
-      "routePrefix": "/api"
+    {
+      "src": "server/src/index.js",
+      "use": "@vercel/node"
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/src/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/web/$1"
+    }
+  ]
 }
