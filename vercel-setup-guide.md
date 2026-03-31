@@ -1,17 +1,39 @@
-# Guía de Configuración para Vercel con Monorepo
+# Historial Técnico: Despliegue Monorepo en Vercel (Frontend + Backend)
 
-Si tienes un monorepo con la siguiente estructura:
+## Contexto
+
+Este documento registra el proceso real de migración de un proyecto que originalmente solo tenía frontend estático en Vercel, hacia un monorepo unificado con frontend (Vite) y backend (Node.js/Express) bajo el mismo dominio.
+
+## Estructura Final del Proyecto
 
 ```
-./web/ - Tu frontend con Vite
-./server/ - Tu backend con Node.js
+PORTFOLIO/
+├── public_html/        ← generado por Vite (ignorado en git)
+├── server/
+│   └── src/
+│       └── index.js    ← entry point del backend
+├── web/
+│   ├── public/         ← archivos estáticos (favicon, PDFs, etc.)
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── css/
+│   │   ├── js/
+│   │   ├── index.html
+│   │   ├── contacto.html
+│   │   ├── proyectos.html
+│   │   ├── desarrollo.html
+│   │   └── 404.html
+│   ├── vite.config.js
+│   └── package.json
+├── .gitignore
+└── vercel.json
 ```
 
-Esta es una estructura ideal para usar **Services** en Vercel. Sigue los pasos a continuación para configurar correctamente tu proyecto:
+---
 
-## Paso 1: Crear el archivo `vercel.json`
+## Configuración Final
 
-Crea un archivo `vercel.json` en la raíz de tu repositorio (al mismo nivel que las carpetas `web` y `server`):
+### `vercel.json` (raíz del repo)
 
 ```json
 {
@@ -21,323 +43,266 @@ Crea un archivo `vercel.json` en la raíz de tu repositorio (al mismo nivel que 
       "src": "web/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "web/dist"
+        "distDir": "../public_html"
       }
     },
     {
-      "src": "server/package.json",
+      "src": "server/src/index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "server/$1"
+      "dest": "/server/src/index.js"
     },
     {
-      "src": "(.*)",
-      "dest": "web/$1"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/web/$1"
     }
-  ],
+  ]
+}
+```
+
+### `web/vite.config.js`
+
+```js
+import { resolve } from 'path'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  root: 'src',
+  publicDir: '../public',
+  build: {
+    outDir: resolve(__dirname, '../public_html'),
+    emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main:       resolve(__dirname, 'src/index.html'),
+        contacto:   resolve(__dirname, 'src/contacto.html'),
+        '404':      resolve(__dirname, 'src/404.html'),
+        proyectos:  resolve(__dirname, 'src/proyectos.html'),
+        desarrollo: resolve(__dirname, 'src/desarrollo.html')
+      }
+    }
+  }
+})
+```
+
+### `.gitignore` (raíz)
+
+```
+public_html/
+.vercel/
+```
+
+---
+
+## Variables de Entorno
+
+Configurar en Vercel Dashboard → Settings → Environment Variables:
+
+```
+EMAIL_USER=tu-email@gmail.com
+EMAIL_PASS=tu-app-password
+EMAIL_TO=destino@email.com
+```
+
+---
+
+## Historial de Problemas y Decisiones
+
+### Fase 1: Solo frontend con `experimentalServices`
+
+La configuración original usaba `experimentalServices` de Vercel, que detecta automáticamente Vite dentro de `web/` y sirve el `dist/` correctamente:
+
+```json
+{
   "experimentalServices": {
     "web": {
       "entrypoint": "web",
       "routePrefix": "/"
     },
     "api": {
-      "entrypoint": "server",
+      "entrypoint": "server/src/index.js",
       "routePrefix": "/api"
     }
   }
 }
 ```
 
-## Paso 2: Configurar el Dashboard de Vercel
-
-1. Ve a tu proyecto del portafolio en el [dashboard de Vercel](https://vercel.com/dashboard).
-2. En **Settings → General**, cambia el Framework a **Services**.
-3. Guarda los cambios.
-
-## Paso 3: Hacer Merge y Desplegar
-
-Cuando hagas merge de tu rama `api-mailer` a `main`, Vercel automáticamente:
-
-1. Detectará los cambios en ambas carpetas (`web` y `server`).
-2. Construirá cada una:
-   - **Vite** para `web`.
-   - **Node.js** para `server`.
-3. Desplegará ambas bajo la misma URL:
-   - Tu frontend estará disponible en `/`.
-   - Tu API estará disponible en `/api`.
-
-Esto significa que tu frontend podrá hacer requests a `/api/enviar-email` (o cualquier ruta que definas) sin problemas de CORS, ya que estarán en el mismo dominio.
+**Resultado:** El front funcionaba perfecto (`/contacto.html` limpio), pero el back no levantaba. `experimentalServices` y `builds` son mutuamente excluyentes, lo que impedía configurar el backend correctamente.
 
 ---
 
-## Problema Común: Error "No services configured"
+### Las tres etapas de rutas rotas en producción
 
-### Descripción del Error
-Al intentar desplegar un proyecto con un monorepo en Vercel, puede aparecer el siguiente error:
+Durante el proceso se pasó por tres estados distintos de rutas en producción, cada uno con su propio conjunto de errores:
+
+#### Etapa 1: `app/web/src/contacto.html` ❌
+Ocurre cuando Vite genera el output en `dist/src/` en vez de `dist/`. Causado por usar `resolve(__dirname, 'src/index.html')` sin definir `root: 'src'` — Rollup replica la estructura de carpetas del path absoluto.
+
+**Síntoma visible:** Los HTMLs cargan pero sin estilos ni JS — las rutas relativas de los assets quedan mal resueltas. Por ejemplo, `contacto.html` referencia `/assets/theme.css` pero el navegador lo busca en `/web/src/assets/theme.css` que no existe.
 
 ```
-Running "vercel build"
-Vercel CLI 50.37.3
-Error: No services configured. Add `experimentalServices` to vercel.json.
+/web/src/contacto.html    ← URL en producción
+/web/src/assets/...       ← assets no encontrados, página rota visualmente
 ```
 
-Este error ocurre cuando el archivo `vercel.json` no incluye la configuración necesaria para `experimentalServices`, lo que impide que Vercel detecte y configure correctamente los servicios del monorepo.
+#### Etapa 2: `app/web/contacto.html` ❌
+Ocurre cuando el `distDir` apunta correctamente al `dist/` pero Vercel igual sirve toda la carpeta `web/` como raíz estática por el comportamiento de `@vercel/static-build` en monorepos.
 
-### Solución
-1. **Asegúrate de que el archivo `vercel.json` incluya la configuración de `experimentalServices`**:
+**Síntoma visible:** Los HTMLs cargan y los estilos funcionan (porque los assets también están bajo `/web/assets/`), pero las URLs son incorrectas para el usuario y el SEO.
 
-   ```json
-   {
-     "version": 2,
-     "builds": [
-       {
-         "src": "web/package.json",
-         "use": "@vercel/static-build",
-         "config": {
-           "distDir": "web/dist"
-         }
-       },
-       {
-         "src": "server/package.json",
-         "use": "@vercel/node"
-       }
-     ],
-     "routes": [
-       {
-         "src": "/api/(.*)",
-         "dest": "server/$1"
-       },
-       {
-         "src": "(.*)",
-         "dest": "web/$1"
-       }
-     ],
-     "experimentalServices": {
-       "web": {
-         "entrypoint": "web",
-         "routePrefix": "/"
-       },
-       "api": {
-         "entrypoint": "server",
-         "routePrefix": "/api"
-       }
-     }
-   }
-   ```
+```
+/web/contacto.html    ← URL en producción
+/web/assets/...       ← assets SÍ cargan (mismo prefijo)
+```
 
-2. **Verifica la estructura del proyecto**:
-   - La carpeta `web` debe contener un `package.json` con un script `build` que genere la carpeta `dist`.
-   - La carpeta `server` debe contener un `package.json` con las dependencias necesarias para el backend.
+#### Etapa 3: `app/contacto.html` ✅
+Solución final con `public_html/` en la raíz + route `/web/$1`. Las URLs son limpias y los assets resuelven correctamente.
 
-3. **Actualiza Vercel CLI**:
-   Asegúrate de estar utilizando la última versión de Vercel CLI:
-   ```bash
-   npm install -g vercel
-   ```
+```
+/contacto.html    ← URL en producción
+/assets/...       ← assets cargan correctamente
+```
 
-4. **Despliega nuevamente**:
-   Ejecuta el siguiente comando para desplegar el proyecto:
-   ```bash
-   vercel --prod
-   ```
-
-Con estos pasos, el error debería resolverse y el despliegue debería completarse correctamente.
+**Por qué los assets funcionan en la etapa 3:** Vite genera referencias de assets con paths absolutos (`/assets/theme.css`). La route `/(.*) → /web/$1` de Vercel reescribe internamente tanto `/contacto.html` → `/web/contacto.html` como `/assets/theme.css` → `/web/assets/theme.css`, manteniendo la coherencia.
 
 ---
 
-### Problema Común: Falta de Variables de Entorno en Producción
+### Fase 2: Migración a `builds` — problema con `distDir`
 
-### Descripción del Error
-Un error común al desplegar un backend en Vercel es olvidar configurar las variables de entorno necesarias para el funcionamiento del servicio. Esto puede causar fallos en funcionalidades críticas, como el envío de correos electrónicos.
-
-Por ejemplo, si el backend utiliza las siguientes variables de entorno:
-
-```dotenv
-EMAIL_USER="sullcafernando18@gmail.com"
-EMAIL_PASS="boqd sjeb wrhd doai"
-EMAIL_TO="sullca-93@hotmail.com"
-```
-
-Y estas no están configuradas en el entorno de producción, el servicio de correo fallará con errores como `TypeError: Failed to fetch` o `ERR_CONNECTION_REFUSED`.
-
-### Solución
-1. **Configurar las Variables en el Dashboard de Vercel**:
-   - Ve al [dashboard de Vercel](https://vercel.com/dashboard).
-   - Selecciona tu proyecto.
-   - Ve a **Settings → Environment Variables**.
-   - Agrega las siguientes variables con sus valores correspondientes:
-     - `EMAIL_USER`: `sullcafernando18@gmail.com`
-     - `EMAIL_PASS`: `boqd sjeb wrhd doai`
-     - `EMAIL_TO`: `sullca-93@hotmail.com`
-
-2. **Verificar el Uso de las Variables en el Código**:
-   - Asegúrate de que el backend esté utilizando `process.env` para acceder a estas variables. Por ejemplo:
-     ```javascript
-     const emailUser = process.env.EMAIL_USER;
-     const emailPass = process.env.EMAIL_PASS;
-     const emailTo = process.env.EMAIL_TO;
-     ```
-
-3. **Despliega Nuevamente**:
-   - Una vez configuradas las variables, vuelve a desplegar el proyecto:
-     ```bash
-     vercel --prod
-     ```
-
-Con estos pasos, el servicio debería funcionar correctamente en producción.
-
----
-
-### Nota Adicional: Configuración Completa de `vercel.json`
-
-Aunque la documentación de Vercel menciona que solo es necesario agregar `experimentalServices`, en la práctica, el archivo `vercel.json` debe incluir las siguientes secciones para evitar errores:
-
-1. **`version`**: Especifica la versión del esquema de configuración (debe ser `2`).
-2. **`builds`**: Define cómo construir cada servicio (frontend y backend).
-3. **`routes`**: Configura las rutas para redirigir correctamente las solicitudes.
-
-Un archivo `vercel.json` incompleto, que solo incluya `experimentalServices`, puede causar errores como:
-
-```
-Running "vercel build"
-Vercel CLI 50.37.3
-Error: No services configured. Add `experimentalServices` to vercel.json.
-```
-
-Para evitar este problema, asegúrate de que tu archivo `vercel.json` tenga la siguiente estructura completa:
+Al cambiar a `builds` para poder agregar el backend:
 
 ```json
 {
-  "version": 2,
   "builds": [
     {
       "src": "web/package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "web/dist"
-      }
+      "config": { "distDir": "dist" }
     },
     {
-      "src": "server/package.json",
+      "src": "server/src/index.js",
       "use": "@vercel/node"
     }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server/$1"
-    },
-    {
-      "src": "(.*)",
-      "dest": "web/$1"
-    }
-  ],
-  "experimentalServices": {
-    "web": {
-      "entrypoint": "web",
-      "routePrefix": "/"
-    },
-    "api": {
-      "entrypoint": "server",
-      "routePrefix": "/api"
-    }
-  }
+  ]
 }
 ```
 
-Con esta configuración completa, Vercel podrá detectar correctamente los servicios y desplegarlos sin errores.
-
----
-
-### Nota Adicional: Conflicto entre `experimentalServices` y `builds`
-
-### Descripción del Error
-Al intentar desplegar un proyecto en Vercel, puede aparecer el siguiente error:
+**Problema:** `@vercel/static-build` en monorepo siempre prefija los assets con el nombre de la carpeta del `src`. Como el src era `web/package.json`, todos los archivos quedaban bajo `/web/` en el deployment:
 
 ```
-The `experimentalServices` property cannot be used in conjunction with the `builds` property. Please remove one of them.
+/web/contacto.html   ← mal
+/web/assets/...      ← mal
 ```
 
-Esto ocurre porque las propiedades `experimentalServices` y `builds` son mutuamente excluyentes. Si estás utilizando `experimentalServices` para configurar múltiples servicios (como frontend y backend), no debes incluir la propiedad `builds` en el archivo `vercel.json`.
-
-### Solución
-1. **Eliminar la Propiedad `builds`**:
-   - Si estás utilizando `experimentalServices`, elimina la sección `builds` del archivo `vercel.json`.
-
-   Ejemplo de archivo corregido:
-   ```json
-   {
-     "version": 2,
-     "routes": [
-       {
-         "src": "/api/(.*)",
-         "dest": "server/$1"
-       },
-       {
-         "src": "(.*)",
-         "dest": "web/$1"
-       }
-     ],
-     "experimentalServices": {
-       "web": {
-         "entrypoint": "web",
-         "routePrefix": "/"
-       },
-       "api": {
-         "entrypoint": "server",
-         "routePrefix": "/api"
-       }
-     }
-   }
-   ```
-
-2. **Usar Solo `builds` si No Necesitas `experimentalServices`**:
-   - Si decides no usar `experimentalServices`, puedes mantener la sección `builds` para definir cómo construir cada servicio.
-
-3. **Desplegar Nuevamente**:
-   - Una vez corregido el archivo `vercel.json`, vuelve a desplegar el proyecto:
-     ```bash
-     vercel --prod
-     ```
-
-Con estos ajustes, el despliegue debería completarse correctamente.
+El `distDir` se comporta diferente según desde dónde se evalúa:
+- `"dist"` → Vercel lo busca relativo a la raíz del repo, no a `web/`
+- `"web/dist"` → falla el build local con `vercel build`
+- `"../public_html"` → **solución final** (ver Fase 4)
 
 ---
 
-### Nota Adicional: Configuración del Comando `build` en el Backend
+### Fase 3: Problema con `vite.config.js` y el `outDir`
 
-### Descripción del Problema
-En algunos casos, el backend puede no funcionar correctamente en producción si el comando `build` en el archivo `package.json` no está configurado para iniciar el servidor. Por ejemplo, si el comando `build` solo contiene un `echo`, el servidor no se iniciará.
+Con `root: 'src'` en Vite, el directorio de trabajo es `web/src/`. Esto afecta cómo se resuelven los paths:
 
-### Solución
-1. **Actualizar el Comando `build`**:
-   - Asegúrate de que el comando `build` en el archivo `package.json` del backend incluya la instrucción para iniciar el servidor. Por ejemplo:
-     ```json
-     "scripts": {
-       "start": "node src/index.js",
-       "dev": "nodemon src/index.js",
-       "build": "node src/index.js &echo 'Server ready for production'"
-     }
-     ```
+| Config | Desde dónde corre | `../dist` resuelve a |
+|---|---|---|
+| `npm run build` desde `web/` | `web/src/` | `web/dist/` ✅ |
+| `vercel build` desde raíz | `raíz/src/` (no existe) | comportamiento impredecible ❌ |
 
-2. **Probar en Modo Desarrollo**:
-   - Antes de desplegar, prueba el backend en modo desarrollo para asegurarte de que funciona correctamente:
-     ```bash
-     npm run dev
-     ```
+**Solución:** Usar `resolve(__dirname, '../public_html')` como `outDir` — path absoluto que siempre resuelve correctamente sin importar desde dónde se ejecute el build.
 
-3. **Desplegar en Producción**:
-   - Una vez configurado el comando `build`, despliega el proyecto en Vercel:
-     ```bash
-     vercel --prod
-     ```
+```js
+build: {
+  outDir: resolve(__dirname, '../public_html'), // siempre web/../public_html = raíz/public_html
+}
+```
 
-Con este ajuste, el servidor debería iniciarse correctamente en producción y manejar las solicitudes como se espera.
+Esto genera la carpeta `public_html/` en la **raíz del repo**, fuera de `web/`.
 
 ---
 
-Con esta configuración, tendrás un despliegue optimizado y funcional para tu portafolio con frontend y backend integrados.
+### Fase 4: Solución final — `distDir: "../public_html"` + route `/web/$1`
+
+Con el output en `public_html/` (raíz del repo), el `distDir` en `vercel.json` debe apuntar relativamente desde `web/`:
+
+```json
+"config": {
+  "distDir": "../public_html"
+}
+```
+
+Pero Vercel igual sirve los archivos bajo `/web/` en el deployment summary. La solución fue agregar una route que reescribe transparentemente:
+
+```json
+{
+  "src": "/(.*)",
+  "dest": "/web/$1"
+}
+```
+
+Esto hace que `/contacto.html` sirva el archivo que está en `/web/contacto.html` internamente, sin que el usuario vea el prefijo.
+
+---
+
+### Por qué `root: 'src'` con inputs `'src/index.html'` funciona
+
+Aparente contradicción: con `root: 'src'`, los inputs `'src/index.html'` deberían buscar `web/src/src/index.html` que no existe.
+
+Lo que realmente ocurre: Rollup no encuentra los archivos por esos paths, por lo que Vite hace fallback y **escanea automáticamente el directorio root** (`web/src/`), encontrando todos los HTMLs directamente.
+
+Los `rollupOptions.input` con paths incorrectos son efectivamente ignorados. Vite procesa los HTMLs por su comportamiento de escaneo automático del root.
+
+La config equivalente y más honesta sería simplemente no declarar `rollupOptions`:
+
+```js
+export default defineConfig({
+  root: 'src',
+  publicDir: '../public',
+  build: {
+    outDir: resolve(__dirname, '../public_html'),
+    emptyOutDir: true
+    // Vite escanea src/ automáticamente
+  }
+})
+```
+
+Se mantienen los `rollupOptions.input` explícitos con `resolve(__dirname, 'src/...')` por claridad y para evitar que futuras versiones de Vite cambien el comportamiento de escaneo automático.
+
+---
+
+## Comandos útiles
+
+```bash
+# Build local desde web/
+cd web && npm run build
+
+# Preview local del front
+cd web && npm run preview
+# → http://localhost:4173
+
+# Simular build de Vercel localmente (desde raíz)
+vercel build
+# Output en .vercel/output/
+
+# Vincular proyecto con Vercel CLI
+vercel pull
+```
+
+---
+
+## Notas sobre `vercel build` local vs producción
+
+`vercel build` local con config `builds` legacy tiene comportamiento diferente al build en producción:
+- Ignora o resuelve mal el `distDir` en algunos casos
+- No soporta `vercel dev` con `builds` (solo con framework detection automática)
+- El output en `.vercel/output/static/web/` siempre tendrá el prefijo `/web/` — esto es esperado y se maneja con la route `/(.*) → /web/$1`
+
+Para verificar el front, usar `cd web && npm run preview` es más confiable que `vercel dev`.
