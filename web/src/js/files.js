@@ -1,5 +1,5 @@
 
-document.getElementById("btnDescargarCVes").addEventListener("click", function () {
+document.getElementById("btnDescargarCVes")?.addEventListener("click", function () {
    try {
       const link = document.createElement("a");
       link.href = "/CV_Willian Fernando_Sullca_FS.pdf"; // archivo ubicado en web/public/cv.pdf
@@ -14,7 +14,7 @@ document.getElementById("btnDescargarCVes").addEventListener("click", function (
 
 
 
-document.getElementById("btnDescargarCVen").addEventListener("click", function () {
+document.getElementById("btnDescargarCVen")?.addEventListener("click", function () {
    try {
       const link = document.createElement("a");
       link.href = "/CV_Willian Fernando_Sullca_FullStack_EN.pdf"; // archivo ubicado en web/public/cv.pdf
