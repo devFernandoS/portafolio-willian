@@ -1,0 +1,94 @@
+/* 
+  ============================================
+  THEME DEFINITIONS
+  ============================================
+  Este archivo centraliza todas las variables de diseño para los temas.
+  - :root      => emerald_grid_soft_light (Light)
+  - [data-theme="dark"] => emerald_grid (Dark)
+  - [data-theme="stellar"] => cyber_minimalist_portfolio (Stellar/Cyber)
+*/
+
+/* Importar fuentes de Google Fonts (Añade esto a tus HTML o aquí) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&family=Fira+Code&family=Orbitron:wght@700&display=swap');
+
+/* 
+  TEMA 1: Light (emerald_grid_soft_light)
+  Basado en tu DESIGN.md
+*/
+:root {
+  /* Tipografía */
+  --font-display: 'Space Grotesk', sans-serif;
+  /*Light */
+  --font-body: 'Inter', sans-serif;
+  /*Dark */
+  --font-mono: 'Fira Code', monospace;
+  /*Stellar*/
+
+  /* Colores de Superficie (Fondos) */
+  --surface-base: #f8f9fb;
+  --surface-container-low: #f2f4f6;
+  --surface-container-highest: #e0e3e5;
+  --surface-container-lowest: #ffffff;
+
+  /* Colores de Contenido (Texto y Acentos) */
+  --text-primary: #191c1e;
+  --text-secondary: #446464;
+  --accent-primary: #006d43;
+  --accent-secondary: #00a86b;
+
+  /* Colores para Alertas (Toast) Default sin importar la eleccion de themes*/
+  --toast-text: #ffffff;
+  --toast-success-bg: #10b981;
+  --toast-error-bg: #ef4444;
+  --toast-warning-bg: #f59e0b;
+  --toast-info-bg: #3b82f6;
+
+  /* Otros */
+  --card-shadow: 0 20px 40px rgba(25, 28, 30, 0.06);
+  --border-radius: 0.25rem;
+}
+
+/* 
+  TEMA 2: Dark (emerald_grid)
+*/
+[data-theme="dark"] {
+  /* Colores de Superficie */
+  --surface-base: #12181d;
+  --surface-container-low: #191c1e;
+  --surface-container-highest: #2a2f33;
+  --surface-container-lowest: #202529;
+
+  /* Colores de Contenido */
+  --text-primary: #f8f9fb;
+  --text-secondary: #a0b3c1;
+  --accent-primary: #00a86b;
+  --accent-secondary: #34d399;
+
+  /* Otros */
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 
+  TEMA 3: Stellar (cyber_minimalist_portfolio)
+*/
+[data-theme="stellar"] {
+  /* Tipografía */
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Fira Code', monospace;
+
+  /* Colores de Superficie */
+  --surface-base: #050505;
+  --surface-container-low: #111111;
+  --surface-container-highest: #222222;
+  --surface-container-lowest: #1a1a1a;
+
+  /* Colores de Contenido */
+  --text-primary: #00ffcc;
+  --text-secondary: #8899aa;
+  --accent-primary: #ff00ff;
+  --accent-secondary: #00ffff;
+
+  /* Otros */
+  --card-shadow: 4px 4px 0px var(--accent-primary);
+  --border-radius: 0px;
+}
