@@ -16,12 +16,12 @@
     min-width: 250px;
     max-width: 350px;
     padding: 16px 20px;
-    border-radius: 8px;
-    color: #fff;
-    font-family: system-ui, -apple-system, sans-serif;
+    border-radius: var(--border-radius, 8px);
+    color: var(--toast-text, #fff);
+    font-family: var(--font-body, sans-serif);
     font-size: 14px;
     font-weight: 500;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--card-shadow, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
     pointer-events: auto;
     /* Restaura los clics para la alerta */
 
@@ -37,22 +37,22 @@
 
 /* Colores según el tipo de alerta */
 .custom-alert-success {
-    background-color: #10b981;
+    background-color: var(--toast-success-bg);
 }
 
 /* Verde */
 .custom-alert-error {
-    background-color: #ef4444;
+    background-color: var(--toast-error-bg);
 }
 
 /* Rojo */
 .custom-alert-warning {
-    background-color: #f59e0b;
+    background-color: var(--toast-warning-bg);
 }
 
 /* Naranja */
 .custom-alert-info {
-    background-color: #3b82f6;
+    background-color: var(--toast-info-bg);
 }
 
 /* Azul */
@@ -61,7 +61,8 @@
 .custom-alert-close {
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--toast-text);
+    opacity: 0.8;
     font-size: 18px;
     cursor: pointer;
     margin-left: 15px;
@@ -70,7 +71,7 @@
 }
 
 .custom-alert-close:hover {
-    color: #fff;
+    opacity: 1;
 }
 
 /* Animación de salida */
