@@ -85,21 +85,22 @@
               <div class="flex gap-2 items-center">
                 <a href="mailto:sullcafernando18@gmail.com"
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                  <span class="material-symbols-outlined">alternate_email</span>
+
+                  <i data-lucide="mail" class="w-5 h-5"></i>
                 </a>
                 <a href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"
                   rel="noopener noreferrer"
                   class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                  <span class="material-symbols-outlined">code</span>
+                  <i data-lucide="code" class="w-5 h-5"></i>
                 </a>
                 <!-- NUEVO SELECTOR DE TEMAS -->
                 <div class="theme-selector-wrapper">
                   <select id="theme-selector"
                     class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
                     aria-label="Seleccionar tema">
-                    <option value="light">☀️ Light</option>
-                    <option value="dark">🌙 Dark</option>
-                    <option value="stellar">✨ Stellar</option>
+                    <option value="light">◒ Light</option>
+                    <option value="dark">◑ Dark</option>
+                    <option value="stellar">❖ Stellar</option>
                   </select>
                 </div>
               </div>
@@ -218,17 +219,24 @@
           <!-- Footer -->
           <footer class="w-full mt-16 border-t border-slate-200 dark:border-slate-700 py-6 px-4">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 Willian Fernando Sullca. Todos los derechos
+              <p class="text-sm text-content-secondary
+              ">© 2026 Willian Fernando Sullca.
+                Todos los derechos
                 reservados.</p>
-              <div class="flex items-center gap-4">
-                <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]"
-                  href="mailto:sullcafernando18@gmail.com"><span
-                    class="material-symbols-outlined">alternate_email</span></a>
-                <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]"
-                  href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"><span
-                    class="material-symbols-outlined">code</span></a>
-                <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]" href="#"><span
-                    class="material-symbols-outlined">palette</span></a>
+
+              <div class="flex items-center gap-4 ">
+                <a href="mailto:sullcafernando18@gmail.com"
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </a>
+
+                <a href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                  <i data-lucide="code" class="w-5 h-5"></i>
+                </a>
+                <!-- <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]" href="#"><span
+                      class="material-symbols-outlined">palette</span></a> -->
               </div>
             </div>
           </footer>
@@ -243,6 +251,12 @@
   <!-- <script src="./js/theme.js" type="module"></script> -->
   <!-- selcetor de multiples estilos -->
   <script src="./js/theme-switcher.js" type="module"></script>
+  <script src="./js/icons.js" type="module"></script>
+  <!-- Development version -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Production version -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </body>
 
 </html>
