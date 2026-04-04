@@ -36,6 +36,15 @@
     display: none;
 }
 
+.theme-selector-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgb(51 65 85 / 0.5);
+    border: none;
+    border-radius: 0.5rem;
+}
+
 .slider {
     background-color: #ccc;
     bottom: 0;
