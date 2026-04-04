@@ -5,7 +5,7 @@
  */
 
 const THEME_STORAGE_KEY = 'user-theme';
-const themeSelector = document.getElementById('theme-selector');
+const themeSelectors = document.querySelectorAll('.theme-selector');
 
 /**
  * Aplica el tema seleccionado al documento y lo guarda en localStorage.
@@ -18,10 +18,10 @@ function applyTheme(theme) {
     // Guarda la preferencia del usuario
     localStorage.setItem(THEME_STORAGE_KEY, theme);
 
-    // Sincroniza el <select> con el tema actual
-    if (themeSelector) {
-        themeSelector.value = theme;
-    }
+    // Sincroniza todos los <select> con el tema actual (escritorio y móvil)
+    themeSelectors.forEach(selector => {
+        selector.value = theme;
+    });
 }
 
 /**
@@ -40,9 +40,11 @@ function getInitialTheme() {
     return prefersDark ? 'dark' : 'light';
 }
 
-// Event listener para cuando el usuario cambia la opción en el <select>
-themeSelector?.addEventListener('change', (event) => {
-    applyTheme(event.target.value);
+// Event listeners para cuando el usuario cambia la opción en cualquier <select>
+themeSelectors.forEach(selector => {
+    selector.addEventListener('change', (event) => {
+        applyTheme(event.target.value);
+    });
 });
 
 // Aplica el tema inicial en cuanto el script se carga
