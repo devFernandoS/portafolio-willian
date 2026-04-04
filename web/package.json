@@ -12,5 +12,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": { "vite": "^5.0.0" }
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "lucide": "^1.7.0"
+  }
 }

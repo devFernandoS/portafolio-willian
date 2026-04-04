@@ -15,20 +15,35 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
     rel="stylesheet" />
   <link href="./css/global.css" rel="stylesheet" />
+  <link href="./css/themes.css" rel="stylesheet" />
   <script id="tailwind-config">
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
           colors: {
-            "primary": "#197fe6",
-            "background-light": "#f6f7f8",
-            "background-dark": "#111921",
+            surface: {
+              base: "var(--surface-base)",
+              low: "var(--surface-container-low)",
+              highest: "var(--surface-container-highest)",
+              lowest: "var(--surface-container-lowest)",
+            },
+            content: { // 'text' es una clase reservada de tailwind, usamos 'content'
+              primary: "var(--text-primary)",
+              secondary: "var(--text-secondary)",
+            },
+            accent: {
+              primary: "var(--accent-primary)",
+              secondary: "var(--accent-secondary)",
+            }
           },
           fontFamily: {
-            "display": ["Inter", "sans-serif"]
+            display: "var(--font-display)",
+            body: "var(--font-body)",
+            mono: "var(--font-mono)"
           },
-          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+          boxShadow: {
+            theme: "var(--card-shadow)"
+          }
         },
       },
     }
@@ -40,46 +55,53 @@
   </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-[#2c3e50] dark:text-gray-300">
+<!-- Transición suave y uso de variables base en el body -->
+
+<body class="bg-surface-base font-body text-content-primary transition-colors duration-300">
   <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
     <div class="layout-container flex h-full grow flex-col">
       <div class="px-4 sm:px-10 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
         <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
           <!-- TopNavBar -->
           <header
-            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 px-4 sm:px-10 py-3">
-            <div class="flex items-center gap-4 text-[#2c3e50] dark:text-gray-100">
-              <div class="size-4 text-[#2ECC71]">
+            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-surface-highest px-4 sm:px-10 py-3">
+            <div class="flex items-center gap-4 text-content-primary">
+              <div class="size-4 text-accent-primary transition-colors duration-300">
                 <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                   <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
                 </svg>
               </div>
-              <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Willian Fernando Sullca</h2>
+              <h2 class="font-display text-lg font-bold leading-tight tracking-[-0.015em]">Willian Fernando Sullca</h2>
             </div>
             <div class="hidden md:flex flex-1 justify-end gap-8">
               <div class="flex items-center gap-9">
-                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                <a class="nav-link active text-content-secondary hover:text-accent-primary transition-colors text-sm font-medium leading-normal"
                   href="#">Inicio</a>
-                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                <a class="nav-link text-content-secondary hover:text-accent-primary transition-colors text-sm font-medium leading-normal"
                   href="proyectos.html">Proyectos</a>
-                <a class="nav-link text-[#2c3e50] dark:text-gray-300 hover:text-[#3498DB] text-sm font-medium leading-normal"
+                <a class="nav-link text-content-secondary hover:text-accent-primary transition-colors text-sm font-medium leading-normal"
                   href="contacto.html">Contacto</a>
               </div>
               <div class="flex gap-2 items-center">
                 <a href="mailto:sullcafernando18@gmail.com"
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                  <span class="material-symbols-outlined">alternate_email</span>
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+
+                  <i data-lucide="mail" class="w-5 h-5"></i>
                 </a>
                 <a href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"
                   rel="noopener noreferrer"
-                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                  <span class="material-symbols-outlined">code</span>
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                  <i data-lucide="code" class="w-5 h-5"></i>
                 </a>
-                <div class="theme-switch-wrapper">
-                  <label class="theme-switch" for="theme-toggle">
-                    <input type="checkbox" id="theme-toggle" />
-                    <span class="slider"></span>
-                  </label>
+                <!-- NUEVO SELECTOR DE TEMAS -->
+                <div class="theme-selector-wrapper">
+                  <select id="theme-selector"
+                    class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
+                    aria-label="Seleccionar tema">
+                    <option value="light">◒ Light</option>
+                    <option value="dark">◑ Dark</option>
+                    <option value="stellar">❖ Stellar</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -104,25 +126,25 @@
                   class="flex flex-col gap-6 @[480px]:min-w-[400px] @[480px]:gap-8 @[864px]:justify-center @[864px]:w-1/2">
                   <div class="flex flex-col gap-2 text-left">
                     <h1
-                      class="text-[#2c3e50] dark:text-gray-100 text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+                      class="font-display text-content-primary text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
                       Willian Fernando Sullca
                     </h1>
                     <h2
-                      class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal">
+                      class="font-display text-content-secondary text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal">
                       Tecnico en Desarrollo de Aplicaciones Web - UNLaM
                     </h2>
                     <h2
-                      class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal">
+                      class="font-display text-content-secondary text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-normal">
                       Desarrollador Web Full-Stack
                     </h2>
                   </div>
                   <div class="flex flex-wrap gap-3">
                     <a href="proyectos.html"
-                      class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#2ECC71] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-[#27ae60] transition-colors">
+                      class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-accent-primary text-surface-lowest text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-accent-secondary transition-colors shadow-theme">
                       <span class="truncate">Ver Mis Proyectos</span>
                     </a>
                     <button id="btnDescargarCVes"
-                      class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-slate-300 dark:hover:bg-slate-700/80 transition-colors">
+                      class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-surface-highest text-content-primary text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] hover:bg-surface-low transition-colors">
                       <span class="truncate">Descargar CV</span>
                     </button>
                   </div>
@@ -147,17 +169,17 @@
                 <div class="md:col-span-3 flex flex-col gap-6">
                   <!-- BodyText -->
                   <div class="space-y-4">
-                    <p class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-relaxed">
+                    <p class="text-content-primary text-base font-normal leading-relaxed">
                       Soy Desarrollador Full-Stack con experiencia profesional en Angular, React , Spring Boot, Node.js
                       y tecnologías web modernas, trabajando en proyectos de migración,
                       integración de servicios (Mercado Libre, Mercado Pago, Redmine), análisis de datos y generación de
                       reportes.
                     </p>
-                    <p class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-relaxed">
+                    <p class="text-content-primary text-base font-normal leading-relaxed">
                       Mi enfoque está en construir soluciones estables, escalables y fáciles de mantener,
                       aplicando buenas prácticas como POO, SOLID y Clean Architecture.
                     </p>
-                    <p class="text-[#2c3e50] dark:text-gray-300 text-base font-normal leading-relaxed">
+                    <p class="text-content-primary text-base font-normal leading-relaxed">
                       Me motiva resolver problemas complejos, trabajar en equipos ágiles y desarrollar productos que
                       aporten valor real al usuario.
                       Tengo un fuerte interés en el backend, los microservicios, el diseño de interfaces centradas en la
@@ -167,7 +189,7 @@
                   </div>
                   <!-- Skills Section -->
                   <div class="flex flex-col gap-4">
-                    <h3 class="text-[#2c3e50] dark:text-gray-200 text-lg font-bold">Habilidades</h3>
+                    <h3 class="text-content-primary text-lg font-bold">Habilidades</h3>
                     <div class="flex flex-wrap gap-2">
                       <span
                         class="inline-flex items-center rounded-md bg-[#3498DB]/20 px-3 py-1 text-sm font-medium text-[#3498DB] ring-1 ring-inset ring-[#3498DB]/30">Diseño
@@ -197,17 +219,24 @@
           <!-- Footer -->
           <footer class="w-full mt-16 border-t border-slate-200 dark:border-slate-700 py-6 px-4">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 Willian Fernando Sullca. Todos los derechos
+              <p class="text-sm text-content-secondary
+              ">© 2026 Willian Fernando Sullca.
+                Todos los derechos
                 reservados.</p>
-              <div class="flex items-center gap-4">
-                <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]"
-                  href="mailto:sullcafernando18@gmail.com"><span
-                    class="material-symbols-outlined">alternate_email</span></a>
-                <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]"
-                  href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"><span
-                    class="material-symbols-outlined">code</span></a>
-                <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]" href="#"><span
-                    class="material-symbols-outlined">palette</span></a>
+
+              <div class="flex items-center gap-4 ">
+                <a href="mailto:sullcafernando18@gmail.com"
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                  <i data-lucide="mail" class="w-5 h-5"></i>
+                </a>
+
+                <a href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                  <i data-lucide="code" class="w-5 h-5"></i>
+                </a>
+                <!-- <a class="text-gray-500 dark:text-gray-400 hover:text-[#3498DB]" href="#"><span
+                      class="material-symbols-outlined">palette</span></a> -->
               </div>
             </div>
           </footer>
@@ -216,9 +245,18 @@
     </div>
   </div>
 
-  <script src="./js/navbar.js" type="module"></script>
+  <!-- <script src="./js/navbar.js" type="module"></script> -->
   <script src="./js/files.js" type="module"></script>
-  <script src="./js/theme.js" type="module"></script>
+  <!-- selcetor simple -->
+  <!-- <script src="./js/theme.js" type="module"></script> -->
+  <!-- selcetor de multiples estilos -->
+  <script src="./js/theme-switcher.js" type="module"></script>
+  <script src="./js/icons.js" type="module"></script>
+  <!-- Development version -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- Production version -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </body>
 
 </html>
