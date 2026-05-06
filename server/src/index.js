@@ -17,6 +17,18 @@ const cors = require('cors');
 const { body, validationResult } = require('express-validator');
 const sanitizeHtml = require('sanitize-html');
 const rateLimit = require('express-rate-limit');
+const fs = require('fs');
+const path = require('path');
+
+// Función helper para cargar templates
+const srcHTML = (fileName, replacements) => {
+    let html = fs.readFileSync(path.join(__dirname, 'templates', fileName), 'utf8');
+    Object.keys(replacements).forEach(key => {
+        html = html.replace(new RegExp(`{{${key}}}`, 'g'), replacements[key]);
+    });
+    return html;
+};
+
 
 const app = express();
 
@@ -69,15 +81,37 @@ app.post('/api/contact', [
             },
         });
 
-        const mailOptions = {
+        // 1. Correo PROPIO (Notificación de nuevo lead)
+        const adminMailOptions = {
             from: process.env.EMAIL_USER,
             to: process.env.EMAIL_TO,
-            subject: `Nuevo mensaje de contacto de ${name} mediante Portafolio Web`,
-            text: `Nombre: ${name}\nEmail: ${email}\nAsunto: ${subject}\nMensaje: ${sanitizedMessage}`,
+            subject: `🚀 Nuevo Proyecto: ${subject} de ${name}`,
+            html: `
+            <h3>Nuevo mensaje desde el Portafolio</h3>
+            <p><strong>Nombre:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Mensaje:</strong> ${sanitizedMessage}</p>
+        `
         };
 
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'Mensaje enviado con éxito.' });
+        // 2. Correo para EL CLIENTE (Auto-respuesta elegante)
+        const customerMailOptions = {
+            from: `"Willian S. | Dev Portfolio" <${process.env.EMAIL_USER}>`,
+            to: email, // El email que el usuario cargó en el form
+            subject: 'Confirmación de contacto - Portafolio Profesional',
+            html: srcHTML('customer-reply.html', {
+                name: name,
+                message: sanitizedMessage
+            })
+        };
+
+        //await transporter.sendMail(adminMailOptions);
+        // Enviamos ambos
+        await Promise.all([
+            transporter.sendMail(adminMailOptions),
+            transporter.sendMail(customerMailOptions)
+        ]);
+        res.status(200).json({ message: 'Mensaje y confirmación enviados con éxito.' });
     } catch (error) {
         console.error('Error al enviar el correo:', error);
         res.status(500).json({ error: 'Error al enviar el mensaje.' });
