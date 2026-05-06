@@ -12,11 +12,10 @@ require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 const cors = require('cors');
-const { body, validationResult } = require('express-validator');
-const sanitizeHtml = require('sanitize-html');
-const rateLimit = require('express-rate-limit');
+
+// Rutas importadas , el servicio de mail se movio a su propia carpeta
+const contactRoutes = require('./routes/contact.routes');
 
 const app = express();
 
@@ -32,57 +31,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type']
 }));
 
-// Rate limiter
-const contactLimiter = rateLimit({
-    windowMs: 60 * 1000,
-    max: 5,
-    message: 'Demasiadas solicitudes desde esta IP, por favor intente de nuevo más tarde.'
-});
-
-app.use('/api/contact', contactLimiter);
-
-// Contact route
-app.post('/api/contact', [
-    body('name').trim().notEmpty().withMessage('El nombre es obligatorio').escape(),
-    body('email').isEmail().withMessage('El correo electrónico no es válido').normalizeEmail(),
-    body('subject').trim().notEmpty().withMessage('El asunto es obligatorio').escape(),
-    body('message').trim().notEmpty().withMessage('El mensaje es obligatorio').escape()
-], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { name, email, subject, message } = req.body;
-
-    try {
-        const sanitizedMessage = sanitizeHtml(message, {
-            allowedTags: [],
-            allowedAttributes: {}
-        });
-
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
-
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.EMAIL_TO,
-            subject: `Nuevo mensaje de contacto de ${name} mediante Portafolio Web`,
-            text: `Nombre: ${name}\nEmail: ${email}\nAsunto: ${subject}\nMensaje: ${sanitizedMessage}`,
-        };
-
-        await transporter.sendMail(mailOptions);
-        res.status(200).json({ message: 'Mensaje enviado con éxito.' });
-    } catch (error) {
-        console.error('Error al enviar el correo:', error);
-        res.status(500).json({ error: 'Error al enviar el mensaje.' });
-    }
-});
+// Definición de rutas estructuradas
+app.use('/api/contact', contactRoutes);
 
 // Health check
 app.get('/', (req, res) => {

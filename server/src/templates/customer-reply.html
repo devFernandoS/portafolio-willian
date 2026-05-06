@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: #1a1a1a;
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #007bff;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>¡Gracias por contactarme!</h1>
+        </div>
+        <div class="content">
+            <p>Hola <strong>{{name}}</strong>,</p>
+            <p>He recibido tu mensaje correctamente a través de mi portafolio. Es un gusto que te hayas interesado en mi
+                trabajo.</p>
+            <p>Estoy revisando tu consulta y te responderé personalmente en un plazo de 24 a 48 horas.</p>
+            <hr style="border: 0; border-top: 1px solid #353535;">
+            <p><em>Tu mensaje:</em><br>"{{message}}"</p>
+            <a href="https://linkedin.com/in//willian-Fernando-Sullca" class="button">Ver mi perfil de LinkedIn</a>
+        </div>
+        <div class="footer">
+            Enviado desde el Portafolio Profesional | Merlo, Buenos Aires.
+        </div>
+    </div>
+</body>
+
+</html>
