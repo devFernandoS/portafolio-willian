@@ -58,6 +58,22 @@
             },
         }
     </script>
+    <!-- Script para prevenir el "flash" de tema. Se ejecuta antes de renderizar. -->
+    <script>
+            (function () {
+                const THEME_STORAGE_KEY = 'user-theme';
+
+                function getInitialTheme() {
+                    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+                    if (savedTheme) return savedTheme;
+
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    return prefersDark ? 'dark' : 'light';
+                }
+
+                document.documentElement.setAttribute('data-theme', getInitialTheme());
+            })();
+    </script>
 </head>
 
 <body class="bg-surface-base font-body transition-colors duration-300">
@@ -68,15 +84,16 @@
 
                     <!-- TopNavBar -->
                     <header
-                        class="relative z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 px-4 sm:px-10 py-3">
+                        class="relative z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-surface-highest py-3">
                         <div class="flex items-center gap-4 text-content-primary">
-                            <div class="size-4 text-[#2ECC71]">
+                            <div class="size-4 text-accent-primary transition-colors duration-300">
                                 <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
                                 </svg>
                             </div>
-                            <h2 class="font-display text-lg font-bold leading-tight tracking-[-0.015em]" pr-2>Willian
-                                Fernando Sullca</h2>
+                            <h2 class="font-display text-lg font-bold leading-tight tracking-[-0.015em] pr-2">Willian
+                                Fernando Sullca
+                            </h2>
                         </div>
                         <div class="hidden md:flex flex-1 justify-end gap-8">
                             <div class="flex items-center gap-9">
@@ -89,24 +106,32 @@
                             </div>
                             <div class="flex gap-2 items-center">
                                 <a href="mailto:sullcafernando18@gmail.com"
-                                    class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                                    <span class="material-symbols-outlined">alternate_email</span>
+                                    class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
                                 </a>
                                 <a href="https://github.com/devFernandoS/portafolio-willian.git" target="_blank"
                                     rel="noopener noreferrer"
-                                    class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200 dark:bg-slate-700/50 text-[#2c3e50] dark:text-gray-300 hover:bg-[#3498DB]/20 gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-                                    <span class="material-symbols-outlined">code</span>
+                                    class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-surface-highest text-content-primary hover:bg-surface-low transition-colors gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+                                    <i data-lucide="code" class="w-5 h-5"></i>
                                 </a>
 
                                 <!-- NUEVO SELECTOR DE TEMAS -->
                                 <div class="theme-selector-wrapper">
-                                    <select id="theme-selector"
-                                        class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
-                                        aria-label="Seleccionar tema">
-                                        <option value="light">◒ Light</option>
-                                        <option value="dark">◑ Dark</option>
-                                        <option value="stellar">❖ Stellar</option>
-                                    </select>
+                                    <div id="theme-selector-desktop"
+                                        class="theme-selector-group flex items-center bg-surface-highest rounded-lg p-1 gap-1">
+                                        <button data-theme-value="light" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema claro">
+                                            <i data-lucide="sun" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="dark" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema oscuro">
+                                            <i data-lucide="moon" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="stellar" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema estelar">
+                                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +157,7 @@
                             <div class="w-full h-px bg-surface-highest my-2"></div>
 
                             <!-- Iconos y Temas en móvil -->
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between flex-wrap gap-4">
                                 <div class="flex gap-4">
                                     <a href="mailto:sullcafernando18@gmail.com"
                                         class="p-2 bg-surface-highest rounded-lg text-content-primary hover:bg-surface-low">
@@ -145,13 +170,21 @@
                                 </div>
                                 <!-- NUEVO SELECTOR DE TEMAS -->
                                 <div class="theme-selector-wrapper">
-                                    <select id="theme-selector-mobile"
-                                        class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
-                                        aria-label="Seleccionar tema">
-                                        <option value="light">◒ Light</option>
-                                        <option value="dark">◑ Dark</option>
-                                        <option value="stellar">❖ Stellar</option>
-                                    </select>
+                                    <div id="theme-selector-mobile"
+                                        class="theme-selector-group flex items-center bg-surface-highest rounded-lg p-1 gap-1">
+                                        <button data-theme-value="light" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema claro">
+                                            <i data-lucide="sun" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="dark" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema oscuro">
+                                            <i data-lucide="moon" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="stellar" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema estelar">
+                                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -160,7 +193,7 @@
                     </header>
                     <main>
                         <div class="@container py-8">
-                            <div class="flex flex-col gap-3 px-4">
+                            <div class="flex flex-col gap-3">
                                 <h1
                                     class="text-content-primary text-4xl md:text-5xl font-black leading-tight tracking-tighter relative inline-block w-fit">
                                     Mis Proyectos Seleccionados
@@ -174,267 +207,266 @@
                             </div>
 
 
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-4">
-                            <div
-                                class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl flex flex-col">
-                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
-                                    <img alt="Preview Proyecto"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        src="./img/2abc74e3-5311-408e-94f6-900a0ae5f394.PNG" />
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                                <div
+                                    class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl flex flex-col">
+                                    <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                        <img alt="Preview Proyecto"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            src="./img/2abc74e3-5311-408e-94f6-900a0ae5f394.PNG" />
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        </div>
+                                    </div>
+                                    <div class="p-6 flex flex-col flex-1">
+                                        <h3 class="text-content-primary text-xl font-bold mb-2">
+                                            ICARDS – Plataforma educativa con IA</h3>
+                                        <p class="text-content-secondary text-sm mb-4 line-clamp-2">
+                                            Plataforma educativa desarrollada como trabajo universitario, orientada
+                                            a la
+                                            generación automática de flashcards mediante inteligencia artificial.
+                                            Integra
+                                            procesamiento de lenguaje natural para analizar PDFs y crear contenido
+                                            educativo
+                                            de
+                                            forma automática, aplicando principios de Clean Architecture para
+                                            asegurar
+                                            escalabilidad y mantenimiento.
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            <!-- Frontend -->
+                                            <span
+                                                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">React</span>
+                                            <span
+                                                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Material
+                                                UI</span>
+                                            <!-- Backend -->
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
+                                                Node.js
+                                            </span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
+                                                Prisma ORM
+                                            </span>
+                                            <!-- IA / Data -->
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold  text-xs font-bold rounded-full uppercase">
+                                                IA aplicada
+                                            </span>
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold  text-xs font-bold rounded-full uppercase">
+                                                NLP / OpenAI API
+                                            </span>
+                                            <!-- Concepto -->
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold  font-bold  text-xs  rounded-full uppercase">
+                                                Proyecto académico
+                                            </span>
+                                        </div>
+                                        <div class="mt-auto flex gap-3">
+                                            <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                                href="https://icards.fun/" target="_blank" rel="noopener noreferrer">
+                                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                                Ver Demo
+                                            </a>
+                                            <a class="flex-1 flex items-center justify-center gap-2 text-white justify-center gap-2 bg-background-light dark:bg-gray-800  py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined text-[20px]">code</span>
+                                                Repo GitHub
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="p-6 flex flex-col flex-1">
-                                    <h3 class="text-content-primary text-xl font-bold mb-2">
-                                        ICARDS – Plataforma educativa con IA</h3>
-                                    <p class="text-content-secondary text-sm mb-4 line-clamp-2">
-                                        Plataforma educativa desarrollada como trabajo universitario, orientada
-                                        a la
-                                        generación automática de flashcards mediante inteligencia artificial.
-                                        Integra
-                                        procesamiento de lenguaje natural para analizar PDFs y crear contenido
-                                        educativo
-                                        de
-                                        forma automática, aplicando principios de Clean Architecture para
-                                        asegurar
-                                        escalabilidad y mantenimiento.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        <!-- Frontend -->
-                                        <span
-                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">React</span>
-                                        <span
-                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Material
-                                            UI</span>
-                                        <!-- Backend -->
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
-                                            Node.js
-                                        </span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
-                                            Prisma ORM
-                                        </span>
-                                        <!-- IA / Data -->
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold  text-xs font-bold rounded-full uppercase">
-                                            IA aplicada
-                                        </span>
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold  text-xs font-bold rounded-full uppercase">
-                                            NLP / OpenAI API
-                                        </span>
-                                        <!-- Concepto -->
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold  font-bold  text-xs  rounded-full uppercase">
-                                            Proyecto académico
-                                        </span>
+                                <div
+                                    class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl  flex flex-col">
+                                    <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                        <img alt="Preview Proyecto"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            src="img/panel-precios.png" />
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        </div>
                                     </div>
-                                    <div class="mt-auto flex gap-3">
-                                        <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
-                                            href="https://icards.fun/" target="_blank" rel="noopener noreferrer">
-                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
-                                            Ver Demo
-                                        </a>
-                                        <a class="flex-1 flex items-center justify-center gap-2 text-white justify-center gap-2 bg-background-light dark:bg-gray-800  py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
-                                            href="#">
-                                            <span class="material-symbols-outlined text-[20px]">code</span>
-                                            Repo GitHub
-                                        </a>
+                                    <div class="p-6 flex flex-col flex-1">
+                                        <h3 class="text-content-primary text-xl font-bold mb-2">
+                                            Mercado Junior – Simulador de Inversiones</h3>
+                                        <p class="text-content-primary text-sm mb-4 line-clamp-2">
+                                            Simulador de inversiones desarrollado como proyecto final de carrera,
+                                            enfocado
+                                            en la
+                                            educación financiera. Incluye perfiles de riesgo, visualización de datos
+                                            históricos
+                                            del mercado y paneles interactivos para la simulación de operaciones
+                                            bursátiles..
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            <span
+                                                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Angular</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Spring
+                                                Boot</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
+                                                MYSql
+                                            </span>
+                                            <!-- Data / Análisis -->
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full  uppercase">
+                                                Análisis financiero
+                                            </span>
+
+                                            <!-- Concepto -->
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full uppercase">
+                                                Trabajo final de carrera
+                                            </span>
+
+                                        </div>
+                                        <div class="mt-auto flex gap-3">
+                                            <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                                href="https://mercadojunior.com.ar" target="_blank"
+                                                rel="noopener noreferrer">
+                                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                                Ver Demo
+                                            </a>
+                                            <a class="flex-1 flex items-center text-white justify-center gap-2 bg-background-light dark:bg-gray-800  dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                                href="https://github.com/FernandoSullca/TPI-Front.git" target="_blank"
+                                                rel="noopener noreferrer">
+                                                <span class="material-symbols-outlined text-[20px]">code</span>
+                                                Repo GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl  flex flex-col">
+                                    <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                        <img alt="Preview Proyecto"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            src="img/hd-ambientalistas-autocomvocados.png" />
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        </div>
+                                    </div>
+                                    <div class="p-6 flex flex-col flex-1">
+                                        <h3 class="text-content-primary text-xl font-bold mb-2">
+                                            Plataforma Web Institucional – Organización Ambientalista</h3>
+                                        <p class="text-content-secondary text-sm mb-4 line-clamp-2">
+                                            Desarrollo y migración de una plataforma web institucional como trabajo
+                                            voluntario,
+                                            reemplazando un CMS tradicional por una arquitectura moderna basada en
+                                            Node.js y
+                                            React. Incluye portal de noticias, panel administrativo y mantenimiento
+                                            evolutivo
+                                            post-lanzamiento.
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            <span
+                                                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">React</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Node.js</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">MySql</span>
+
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full uppercase">
+                                                Migración tecnológica
+                                            </span>
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full uppercase">
+                                                Voluntariado
+                                            </span>
+                                        </div>
+                                        <div class="mt-auto flex gap-3">
+                                            <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
+                                                href="https://ambientalistas.org.ar/" target="_blank"
+                                                rel="noopener noreferrer">
+                                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                                Ver Demo
+                                            </a>
+                                            <a class="flex-1 flex items-center text-white justify-center gap-2 bg-background-light dark:bg-gray-800 text-text-light-primary dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined text-[20px]">code</span>
+                                                Repo GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl  flex flex-col">
+                                    <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
+                                        <img alt="Preview Proyecto"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            src="img/hd-hogar-aleluya.png" />
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        </div>
+                                    </div>
+                                    <div class="p-6 flex flex-col flex-1">
+                                        <h3 class="text-content-primary text-xl font-bold mb-2">
+                                            Sitio Web Institucional – Hogar Aleluya</h3>
+                                        <p class="text-content-secondary text-sm mb-4 line-clamp-2">
+                                            Desarrollo completo del sitio web institucional, desde el diseño de
+                                            prototipos
+                                            en
+                                            Figma hasta el despliegue en Firebase Hosting. Proyecto orientado a
+                                            mejorar
+                                            la
+                                            presencia digital de una organización social.
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            <span
+                                                class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Diseño
+                                                + desarrollo</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">HTML+
+                                                CSS</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Javascript</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">JQuery</span>
+                                            <span
+                                                class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Firebase</span>
+
+                                            <span
+                                                class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold rounded-full uppercase tracking-wider">Proyecto
+                                                end-to-end</span>
+                                        </div>
+                                        <div class="mt-auto flex gap-3">
+
+                                            <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20  opacity-50 cursor-not-allowed pointer-events-none"
+                                                href="https://hogaraleluyasitioweb.web.app/" target="_blank"
+                                                rel="noopener noreferrer">
+                                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                                Ver Demo
+                                            </a>
+                                            <a class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-gray-800 text-white py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
+                                                href="#">
+                                                <span class="material-symbols-outlined text-[20px]">code</span>
+                                                Repo GitHub
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl  flex flex-col">
-                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
-                                    <img alt="Preview Proyecto"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        src="img/panel-precios.png" />
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="mt-8">
+                                <div
+                                    class="group bg-surface-highest bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                                    <div>
+                                        <h3 class="text-content-primary text-xl font-bold mb-2">
+                                            ¿Te gusta lo que ves?</h3>
+                                        <p class="text-content-secondary text-sm">
+                                            Podemos
+                                            trabajar juntos en tu próximo gran proyecto.</p>
                                     </div>
-                                </div>
-                                <div class="p-6 flex flex-col flex-1">
-                                    <h3 class="text-content-primary text-xl font-bold mb-2">
-                                        Mercado Junior – Simulador de Inversiones</h3>
-                                    <p class="text-content-primary text-sm mb-4 line-clamp-2">
-                                        Simulador de inversiones desarrollado como proyecto final de carrera,
-                                        enfocado
-                                        en la
-                                        educación financiera. Incluye perfiles de riesgo, visualización de datos
-                                        históricos
-                                        del mercado y paneles interactivos para la simulación de operaciones
-                                        bursátiles..
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        <span
-                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Angular</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Spring
-                                            Boot</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase">
-                                            MYSql
-                                        </span>
-                                        <!-- Data / Análisis -->
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full  uppercase">
-                                            Análisis financiero
-                                        </span>
-
-                                        <!-- Concepto -->
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full uppercase">
-                                            Trabajo final de carrera
-                                        </span>
-
-                                    </div>
-                                    <div class="mt-auto flex gap-3">
-                                        <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
-                                            href="https://mercadojunior.com.ar" target="_blank"
-                                            rel="noopener noreferrer">
-                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
-                                            Ver Demo
-                                        </a>
-                                        <a class="flex-1 flex items-center text-white justify-center gap-2 bg-background-light dark:bg-gray-800  dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
-                                            href="https://github.com/FernandoSullca/TPI-Front.git" target="_blank"
-                                            rel="noopener noreferrer">
-                                            <span class="material-symbols-outlined text-[20px]">code</span>
-                                            Repo GitHub
-                                        </a>
-                                    </div>
+                                    <a class="flex bg-accent-secondary items-center gap-2 bg-secondary text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-secondary/20"
+                                        href="contacto.html">
+                                        Hablemos ahora
+                                        <span class="material-symbols-outlined">arrow_forward</span>
+                                    </a>
                                 </div>
                             </div>
-                            <div
-                                class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl  flex flex-col">
-                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
-                                    <img alt="Preview Proyecto"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        src="img/hd-ambientalistas-autocomvocados.png" />
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    </div>
-                                </div>
-                                <div class="p-6 flex flex-col flex-1">
-                                    <h3 class="text-content-primary text-xl font-bold mb-2">
-                                        Plataforma Web Institucional – Organización Ambientalista</h3>
-                                    <p class="text-content-secondary text-sm mb-4 line-clamp-2">
-                                        Desarrollo y migración de una plataforma web institucional como trabajo
-                                        voluntario,
-                                        reemplazando un CMS tradicional por una arquitectura moderna basada en
-                                        Node.js y
-                                        React. Incluye portal de noticias, panel administrativo y mantenimiento
-                                        evolutivo
-                                        post-lanzamiento.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        <span
-                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">React</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Node.js</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">MySql</span>
-
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full uppercase">
-                                            Migración tecnológica
-                                        </span>
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c] text-xs font-bold rounded-full uppercase">
-                                            Voluntariado
-                                        </span>
-                                    </div>
-                                    <div class="mt-auto flex gap-3">
-                                        <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
-                                            href="https://ambientalistas.org.ar/" target="_blank"
-                                            rel="noopener noreferrer">
-                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
-                                            Ver Demo
-                                        </a>
-                                        <a class="flex-1 flex items-center text-white justify-center gap-2 bg-background-light dark:bg-gray-800 text-text-light-primary dark:text-text-dark-primary py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
-                                            href="#">
-                                            <span class="material-symbols-outlined text-[20px]">code</span>
-                                            Repo GitHub
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="group bg-surface-highest rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border-border-dark boxShadow shadow-2xl  flex flex-col">
-                                <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-800">
-                                    <img alt="Preview Proyecto"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        src="img/hd-hogar-aleluya.png" />
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    </div>
-                                </div>
-                                <div class="p-6 flex flex-col flex-1">
-                                    <h3 class="text-content-primary text-xl font-bold mb-2">
-                                        Sitio Web Institucional – Hogar Aleluya</h3>
-                                    <p class="text-content-secondary text-sm mb-4 line-clamp-2">
-                                        Desarrollo completo del sitio web institucional, desde el diseño de
-                                        prototipos
-                                        en
-                                        Figma hasta el despliegue en Firebase Hosting. Proyecto orientado a
-                                        mejorar
-                                        la
-                                        presencia digital de una organización social.
-                                    </p>
-                                    <div class="flex flex-wrap gap-2 mb-6">
-                                        <span
-                                            class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">Diseño
-                                            + desarrollo</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">HTML+
-                                            CSS</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Javascript</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">JQuery</span>
-                                        <span
-                                            class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold rounded-full uppercase tracking-wider">Firebase</span>
-
-                                        <span
-                                            class="px-3 py-1 bg-[#F1C40F]/20 text-[#c49b0c]  text-xs font-bold rounded-full uppercase tracking-wider">Proyecto
-                                            end-to-end</span>
-                                    </div>
-                                    <div class="mt-auto flex gap-3">
-
-                                        <a class="flex-1 flex items-center justify-center gap-2 bg-accent-primary text-white py-2.5 rounded-lg text-sm font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20  opacity-50 cursor-not-allowed pointer-events-none"
-                                            href="https://hogaraleluyasitioweb.web.app/" target="_blank"
-                                            rel="noopener noreferrer">
-                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
-                                            Ver Demo
-                                        </a>
-                                        <a class="flex-1 flex items-center justify-center gap-2 bg-background-light dark:bg-gray-800 text-white py-2.5 rounded-lg text-sm font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all"
-                                            href="#">
-                                            <span class="material-symbols-outlined text-[20px]">code</span>
-                                            Repo GitHub
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-4 mt-8">
-                            <div
-                                class="group bg-surface-highest bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-                                <div>
-                                    <h3 class="text-content-primary text-xl font-bold mb-2">
-                                        ¿Te gusta lo que ves?</h3>
-                                    <p class="text-content-secondary text-sm">
-                                        Podemos
-                                        trabajar juntos en tu próximo gran proyecto.</p>
-                                </div>
-                                <a class="flex bg-accent-secondary items-center gap-2 bg-secondary text-white px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all shadow-lg shadow-secondary/20"
-                                    href="contacto.html">
-                                    Hablemos ahora
-                                    <span class="material-symbols-outlined">arrow_forward</span>
-                                </a>
-                            </div>
-                        </div>
                     </main>
                 </div>
             </div>
@@ -443,6 +475,15 @@
     <script src="./js/navbar.js" type="module"></script>
     <script src="./js/icons.js" type="module"></script>
     <script src="./js/theme-switcher.js" type="module"></script>
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Ejecuta Lucide para reemplazar los íconos después de que el DOM esté listo
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

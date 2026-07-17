@@ -53,6 +53,23 @@
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
   </style>
+
+  <!-- Script para prevenir el "flash" de tema. Se ejecuta antes de renderizar. -->
+  <script>
+      (function () {
+        const THEME_STORAGE_KEY = 'user-theme';
+
+        function getInitialTheme() {
+          const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+          if (savedTheme) return savedTheme;
+
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          return prefersDark ? 'dark' : 'light';
+        }
+
+        document.documentElement.setAttribute('data-theme', getInitialTheme());
+      })();
+  </script>
 </head>
 
 <!-- Transición suave y uso de variables base en el body -->
@@ -104,13 +121,18 @@
                 </a>
                 <!-- NUEVO SELECTOR DE TEMAS -->
                 <div class="theme-selector-wrapper">
-                  <select id="theme-selector-desktop"
-                    class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
-                    aria-label="Seleccionar tema">
-                    <option value="light">◒ Light</option>
-                    <option value="dark">◑ Dark</option>
-                    <option value="stellar">❖ Stellar</option>
-                  </select>
+                  <div id="theme-selector-desktop"
+                    class="theme-selector-group flex items-center bg-surface-highest rounded-lg p-1 gap-1">
+                    <button data-theme-value="light" class="theme-btn p-1.5 rounded-md" aria-label="Tema claro">
+                      <i data-lucide="sun" class="w-5 h-5"></i>
+                    </button>
+                    <button data-theme-value="dark" class="theme-btn p-1.5 rounded-md" aria-label="Tema oscuro">
+                      <i data-lucide="moon" class="w-5 h-5"></i>
+                    </button>
+                    <button data-theme-value="stellar" class="theme-btn p-1.5 rounded-md" aria-label="Tema estelar">
+                      <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -131,7 +153,7 @@
               <div class="w-full h-px bg-surface-highest my-2"></div>
 
               <!-- Iconos y Temas en móvil -->
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between flex-wrap gap-4">
                 <div class="flex gap-4">
                   <a href="mailto:sullcafernando18@gmail.com"
                     class="p-2 bg-surface-highest rounded-lg text-content-primary hover:bg-surface-low">
@@ -144,16 +166,22 @@
                 </div>
                 <!-- NUEVO SELECTOR DE TEMAS -->
                 <div class="theme-selector-wrapper">
-                  <select id="theme-selector-mobile"
-                    class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
-                    aria-label="Seleccionar tema">
-                    <option value="light">◒ Light</option>
-                    <option value="dark">◑ Dark</option>
-                    <option value="stellar">❖ Stellar</option>
-                  </select>
-                </div>
-              </div>
 
+                  <div id="theme-selector-mobile"
+                    class="theme-selector-group flex items-center bg-surface-highest rounded-lg p-1 gap-1">
+                    <button data-theme-value="light" class="theme-btn p-1.5 rounded-md" aria-label="Tema claro">
+                      <i data-lucide="sun" class="w-5 h-5"></i>
+                    </button>
+                    <button data-theme-value="dark" class="theme-btn p-1.5 rounded-md" aria-label="Tema oscuro">
+                      <i data-lucide="moon" class="w-5 h-5"></i>
+                    </button>
+                    <button data-theme-value="stellar" class="theme-btn p-1.5 rounded-md" aria-label="Tema estelar">
+                      <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </header>
           <main>
@@ -297,9 +325,6 @@
 
   <script src="./js/navbar.js" type="module"></script>
   <script src="./js/files.js" type="module"></script>
-  <!-- selcetor simple -->
-  <!-- <script src="./js/theme.js" type="module"></script> -->
-  <!-- selcetor de multiples estilos -->
   <script src="./js/theme-switcher.js" type="module"></script>
   <script src="./js/icons.js" type="module"></script>
   <!-- Development version -->
@@ -308,5 +333,10 @@
   <!-- Production version -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </body>
+
+<script>
+  // Ejecuta Lucide para reemplazar los íconos después de que el DOM esté listo
+  lucide.createIcons();
+</script>
 
 </html>

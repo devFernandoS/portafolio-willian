@@ -76,7 +76,22 @@
             /* Add spacing between label text and asterisk */
         }
     </style>
+    <!-- Script para prevenir el "flash" de tema. Se ejecuta antes de renderizar. -->
+    <script>
+            (function () {
+                const THEME_STORAGE_KEY = 'user-theme';
 
+                function getInitialTheme() {
+                    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+                    if (savedTheme) return savedTheme;
+
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    return prefersDark ? 'dark' : 'light';
+                }
+
+                document.documentElement.setAttribute('data-theme', getInitialTheme());
+            })();
+    </script>
 </head>
 
 <body class="font-body bg-surface-base antialiased transition-colors duration-300">
@@ -86,16 +101,16 @@
                 <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
                     <!-- TopNavBar -->
                     <header
-                        class="relative z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-700 px-4 sm:px-10 py-3">
-                        <div class="flex items-center gap-4 text-[#2c3e50] dark:text-gray-100">
-                            <div class="size-4 text-[#2ECC71]">
+                        class="relative z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-surface-highest py-3">
+                        <div class="flex items-center gap-4 text-content-primary">
+                            <div class="size-4 text-accent-primary transition-colors duration-300">
                                 <svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z"></path>
                                 </svg>
                             </div>
-                            <h2
-                                class="text-lg font-bold font-display text-content-primary leading-tight tracking-[-0.015em] pr-2">
-                                Willian Fernando Sullca</h2>
+                            <h2 class="font-display text-lg font-bold leading-tight tracking-[-0.015em] pr-2">Willian
+                                Fernando Sullca
+                            </h2>
                         </div>
                         <div class="hidden md:flex flex-1 justify-end gap-8">
                             <div class="flex items-center gap-9">
@@ -120,13 +135,21 @@
 
                                 <!-- NUEVO SELECTOR DE TEMAS -->
                                 <div class="theme-selector-wrapper">
-                                    <select id="theme-selector"
-                                        class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
-                                        aria-label="Seleccionar tema">
-                                        <option value="light">◒ Light</option>
-                                        <option value="dark">◑ Dark</option>
-                                        <option value="stellar">❖ Stellar</option>
-                                    </select>
+                                    <div id="theme-selector-desktop"
+                                        class="theme-selector-group flex items-center bg-surface-highest rounded-lg p-1 gap-1">
+                                        <button data-theme-value="light" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema claro">
+                                            <i data-lucide="sun" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="dark" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema oscuro">
+                                            <i data-lucide="moon" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="stellar" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema estelar">
+                                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +175,7 @@
                             <div class="w-full h-px bg-surface-highest my-2"></div>
 
                             <!-- Iconos y Temas en móvil -->
-                            <div class="flex items-center justify-between">
+                            <div class="flex items-center justify-between flex-wrap gap-4">
                                 <div class="flex gap-4">
                                     <a href="mailto:sullcafernando18@gmail.com"
                                         class="p-2 bg-surface-highest rounded-lg text-content-primary hover:bg-surface-low">
@@ -165,13 +188,21 @@
                                 </div>
                                 <!-- NUEVO SELECTOR DE TEMAS -->
                                 <div class="theme-selector-wrapper">
-                                    <select id="theme-selector-mobile"
-                                        class="theme-selector bg-surface-highest text-content-primary border-none rounded-lg h-10 px-2 cursor-pointer font-body outline-none"
-                                        aria-label="Seleccionar tema">
-                                        <option value="light">◒ Light</option>
-                                        <option value="dark">◑ Dark</option>
-                                        <option value="stellar">❖ Stellar</option>
-                                    </select>
+                                    <div id="theme-selector-mobile"
+                                        class="theme-selector-group flex items-center bg-surface-highest rounded-lg p-1 gap-1">
+                                        <button data-theme-value="light" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema claro">
+                                            <i data-lucide="sun" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="dark" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema oscuro">
+                                            <i data-lucide="moon" class="w-5 h-5"></i>
+                                        </button>
+                                        <button data-theme-value="stellar" class="theme-btn p-1.5 rounded-md"
+                                            aria-label="Tema estelar">
+                                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -182,11 +213,11 @@
                         <div
                             class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
                             <div class="layout-container flex h-full grow flex-col">
-                                <div class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-10 sm:py-20">
+                                <div class="flex flex-1 justify-center py-10 sm:py-20">
                                     <div
                                         class="layout-content-container flex flex-col max-w-[960px] flex-1 gap-8 md:gap-12">
                                         <!-- PageHeading Component -->
-                                        <div class="flex flex-wrap justify-between gap-4 px-4">
+                                        <div class="flex flex-wrap justify-between gap-4">
                                             <div class="flex min-w-72 flex-col gap-3">
                                                 <h1
                                                     class="font-display text-content-primary text-4xl md:text-5xl font-black leading-tight tracking-tighter relative">
@@ -254,10 +285,10 @@
                                         <!-- ActionsBar Section -->
                                         <div class="flex flex-col gap-4">
                                             <h3
-                                                class="text-content-primary  bg-card-dark text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                                                class="text-content-primary text-lg font-bold leading-tight tracking-[-0.015em] pb-2 pt-4">
                                                 Encuéntrame en la red</h3>
                                             <div class="@container">
-                                                <div class="gap-4 px-4 flex flex-wrap justify-start">
+                                                <div class="gap-4 flex flex-wrap justify-start">
                                                     <!-- LinkedIn Item -->
                                                     <a class="flex flex-col items-center gap-2 bg-surface-highest  text-content-primary hover:bg-surface-low tp-4 text-center w-28 rounded-lg shadow-sm  hover:-translate-y-1 transition-all duration-300 group"
                                                         href="https://www.linkedin.com/in/willian-fernando-sullca/"
@@ -288,17 +319,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="px-4">
+                                        <div>
                                             <hr class="border-gray-200 dark:border-gray-700/50" />
                                         </div>
 
                                         <!-- ButtonGroup Section -->
                                         <div class="flex flex-col gap-4">
                                             <h3
-                                                class="text-content-primary text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
+                                                class="text-content-primary text-lg font-bold leading-tight tracking-[-0.015em] pb-2 pt-4">
                                                 Mi Currículum</h3>
                                             <div class="flex justify-stretch">
-                                                <div class="flex flex-1 gap-4 flex-wrap px-4 py-3 justify-start">
+                                                <div class="flex flex-1 gap-4 flex-wrap py-3 justify-start">
                                                     <button id="btnDescargarCVes"
                                                         class="flex bg-accent-primary text-surface-lowest min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-opacity-90 transition-colors duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30">
                                                         <span class="material-symbols-outlined">download</span>
@@ -339,6 +370,11 @@
     <script src="./js/files.js" type="module"></script>
     <script src="./js/theme-switcher.js" type="module"></script>
     <script src="./js/icons.js" type="module"></script>
+    <script>
+        // Ejecuta Lucide para reemplazar los íconos después de que el DOM esté listo
+        lucide.createIcons();
+    </script>
+
     <!-- Development version -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
