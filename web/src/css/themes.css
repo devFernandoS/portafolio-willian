@@ -69,26 +69,46 @@
 }
 
 /* 
-  TEMA 3: Stellar (cyber_minimalist_portfolio)
+  TEMA 3:
+  3. Stellar Theme (Variante "Cyber" - Profesional y Tecnológico)
 */
 [data-theme="stellar"] {
   /* Tipografía */
   --font-display: 'Orbitron', sans-serif;
   --font-body: 'Fira Code', monospace;
 
-  /* Colores de Superficie */
-  --surface-base: #050505;
-  --surface-container-low: #111111;
-  --surface-container-highest: #222222;
-  --surface-container-lowest: #1a1a1a;
-
-  /* Colores de Contenido */
-  --text-primary: #00ffcc;
-  --text-secondary: #8899aa;
-  --accent-primary: #ff00ff;
-  --accent-secondary: #00ffff;
-
   /* Otros */
-  --card-shadow: 4px 4px 0px var(--accent-primary);
   --border-radius: 0px;
+
+  /* Paleta de colores */
+
+  --surface-base: #0A192F;
+  /* Azul marino profundo (Navy) */
+  --surface-container-lowest: #112240;
+  /* Azul un poco más claro para el fondo de tarjetas */
+  --surface-container-low: #172A45;
+  /* Azul para elementos hover y secundarios */
+  --surface-container-highest: #233554;
+  /* Azul/Gris para bordes y elementos destacados */
+
+
+  --text-primary: #CCD6F6;
+  /* Blanco azulado claro para títulos y texto principal */
+  --text-secondary: #8892B0;
+  /* Gris azulado para párrafos y texto secundario */
+
+  --accent-primary: #64FFDA;
+  /* Cian/Menta pálido - el acento principal */
+  --accent-secondary: #7DF9FF;
+  /* Un cian un poco más azulado para complementos */
+
+  /* Fuentes */
+  --font-display: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'monospace';
+
+  /* Sombras */
+  --card-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+
+
 }

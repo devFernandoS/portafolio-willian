@@ -33,14 +33,9 @@ const transporter = nodemailer.createTransport({
 const sendAdminNotification = async (name, email, subject, message) => {
     return transporter.sendMail({
         from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_TO, //receptor donde almacena los contacto mismo o diferente al que envia el correo(Mail principal)
+        to: process.env.EMAIL_TO,
         subject: `🚀 Nuevo Proyecto: ${subject} de ${name}`,
-        html: `
-            <h3>Nuevo mensaje desde el Portafolio</h3>
-            <p><strong>Nombre:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Mensaje:</strong> ${message}</p>
-        `
+        html: srcHTML('admin-notification.html', { name, email, subject, message })
     });
 };
 
